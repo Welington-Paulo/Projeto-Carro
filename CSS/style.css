@@ -1,0 +1,56 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+img {
+    width: 300px; /* Ajuste o tamanho da imagem */
+    margin-bottom: 20px;
+    transition: transform 0.3s ease; /* Adiciona transição suave */
+}
+
+img.ligado {
+    filter: sepia(50%) hue-rotate(30deg); /* Aplica um filtro para mudar a cor */
+}
+
+img.acelerando {
+    animation: moveCar 1s linear infinite alternate;
+}
+
+p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #3e8e41;
+}
+
+@keyframes moveCar {
+    from { transform: translateX(0); }
+    to { transform: translateX(20px); } /* Ajuste a distância do movimento */
+}
