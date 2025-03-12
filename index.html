@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carro Virtual</title>
+    <title>Tela de Loading</title>
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Meu Carro Virtual</h1>
-        <img id="carImage" src="IMG/Audi-Car-PNG-Picture.png" alt="Imagem do Carro">
-        <p id="carInfo">Modelo: <span id="carModel"></span>, Cor: <span id="carColor"></span>, Estado: <span id="carEstado"></span>, Velocidade: <span id="carVelocidade"></span></p>
-        <button id="ligarBtn">Ligar</button>
-        <button id="desligarBtn">Desligar</button>
-        <button id="acelerarBtn">Acelerar</button>
-        <audio id="aceleracaoSom" src="AUDIO/carro-79442.mp3" preload="auto"></audio>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="spinner"></div>
+        <p></p>
     </div>
+
+    <div class="content" style="display: none;">
+        <h1>Conteúdo carregado!</h1>
+    </div>
+
     <script src="JS/script.js"></script>
 </body>
 </html>
