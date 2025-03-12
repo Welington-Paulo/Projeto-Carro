@@ -1,21 +1,47 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tela de Loading</title>
-    <link rel="stylesheet" href="CSS/style.css">
+  <title>Carro Digital</title>
+  <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
-    <div class="loading-screen" id="loadingScreen">
-        <div class="spinner"></div>
-        <p></p>
+
+
+  <div class="container">
+    <h1>Carro Esportivo</h1>
+  <img src="IMG/purepng.com-yellow-chevrolet-corvette-z06-c7-carcarvehicletransportchevroletchevy-961524653293drbwe.png">
+  <p>Modelo: <span id="carroEsportivoModelo"></span></p>
+  <p>Cor: <span id="carroEsportivoCor"></span></p>
+  <p>Ligado: <span id="carroEsportivoLigado"></span></p>
+  <p>Velocidade: <span id="carroEsportivoVelocidade"></span></p>
+  <p>Turbo: <span id="carroEsportivoTurbo"></span></p>
+  <button onclick="ligarCarroEsportivo()">Ligar</button>
+  <button onclick="desligarCarroEsportivo()">Desligar</button>
+  <button onclick="acelerarCarroEsportivo()">Acelerar</button>
+  <button onclick="frearCarroEsportivo()">Frear</button>
+  <button onclick="ativarTurbo()">Ativar Turbo</button>
+  <button onclick="desativarTurbo()">Desativar Turbo</button>
+  <button onclick="buzinarCarroEsportivo()">Buzinar</button>
+</div>
+
+    <div class="container">
+  <h1>Caminhão</h1>
+  <img src="IMG/pngtree-red-truck-transport-png-image_14569283.png">
+  <p>Modelo: <span id="caminhaoModelo"></span></p>
+  <p>Cor: <span id="caminhaoCor"></span></p>
+  <p>Ligado: <span id="caminhaoLigado"></span></p>
+  <p>Velocidade: <span id="caminhaoVelocidade"></span></p>
+  <p>Capacidade de Carga: <span id="caminhaoCapacidade"></span> kg</p>
+  <p>Carga Atual: <span id="caminhaoCargaAtual"></span> kg</p>
+  <button onclick="ligarCaminhao()">Ligar</button>
+  <button onclick="desligarCaminhao()">Desligar</button>
+  <button onclick="acelerarCaminhao()">Acelerar</button>
+  <button onclick="frearCaminhao()">Frear</button>
+  <input type="number" id="cargaInput" placeholder="Quantidade de Carga (kg)">
+  <button onclick="carregarCaminhao()">Carregar</button>
+  <button onclick="buzinarCaminhao()">Buzinar</button>
     </div>
 
-    <div class="content" style="display: none;">
-        <h1>Conteúdo carregado!</h1>
-    </div>
-
-    <script src="JS/script.js"></script>
+  <script src="JS/script.js"></script>
 </body>
 </html>
