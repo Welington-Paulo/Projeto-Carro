@@ -1,0 +1,180 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+#selecao-veiculo {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+#selecao-veiculo button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#selecao-veiculo button:hover {
+    background-color: #0056b3;
+}
+
+#veiculo-detalhes {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#veiculo-detalhes img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#status-veiculo {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+#status-texto {
+    font-weight: normal;
+}
+
+#status-icone {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+.ligado {
+    background-color: green;
+}
+
+.desligado {
+    background-color: red;
+}
+
+#controles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#controles button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#controles button:hover {
+    background-color: #1e7e34;
+}
+
+#velocidade-display {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#velocidade-barra {
+    width: 100%;
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+#velocidade-barra::after {
+    content: '';
+    display: block;
+    height: 100%;
+    background-color: #007bff;
+    border-radius: 5px;
+    width: 0; /* Inicialmente vazia */
+    transition: width 0.3s ease; /* Adiciona uma transição suave */
+}
+
+/* Estilos para os alertas */
+#alertas-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.alerta {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: fadeInOut 3s forwards;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.alerta.sucesso {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    10%, 90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
+#veiculo-detalhes img {
+    max-width: 200px; /* Define a largura máxima da imagem */
+    max-height: 150px; /* Define a altura máxima da imagem */
+    width: auto;      /* Permite que a largura se ajuste proporcionalmente */
+    height: auto;     /* Permite que a altura se ajuste proporcionalmente */
+    border-radius: 5px;
+    margin-bottom: 10px;
+    object-fit: contain; /* Garante que a imagem se ajuste dentro das dimensões sem cortar */
+}
+
+

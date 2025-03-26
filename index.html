@@ -1,35 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Garagem Inteligente</title>
-    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Garagem Inteligente</h1>
 
-    <h2>Selecionar Veículo:</h2>
-    <button id="selecionarCarro">Carro</button>
-    <button id="selecionarCarroEsportivo">Carro Esportivo</button>
-    <button id="selecionarCaminhao">Caminhão</button>
-    <button id="selecionarMoto">Moto</button>
+    <div class="container">
+        <h1>Garagem Inteligente</h1>
 
-    <h2>Ações:</h2>
-    <button id="ligar">Ligar</button>
-    <button id="desligar">Desligar</button>
-    <button id="acelerar">Acelerar</button>
-    <button id="frear">Frear</button>
-    <button id="buzinar">Buzinar</button>
-    <button id="ativarTurbo">Ativar Turbo</button>
-    <button id="desativarTurbo">Desativar Turbo</button>
-    <button id="carregar">Carregar Carga</button>
-    <button id="descargar">Descargar Carga</button>
-    <button id="pintar">Pintar (Vermelho)</button>
-    <button id="empinar">Empinar</button>
-    <button id="abastecer">Abastecer</button>
+        <div id="selecao-veiculo">
+            <button data-veiculo="carro">Carro</button>
+            <button data-veiculo="carro_esportivo">Carro Esportivo</button>
+            <button data-veiculo="caminhao">Caminhão</button>
+            <button data-veiculo="moto">Moto</button> <!-- Nova linha -->
+        </div>
 
-    <div id="informacoesVeiculo"></div>
-    <img id="imagemVeiculo" src="" alt="Imagem do Veículo"> <!-- Elemento para exibir a imagem -->
 
-    <script src="JS/script.js"></script>
+
+
+        
+        <div id="veiculo-detalhes">
+            <h2 id="veiculo-titulo"></h2>
+            <img id="veiculo-imagem" src="" alt="Imagem do Veículo">
+            <div id="veiculo-info"></div>
+            <div id="status-veiculo">
+                Status: <span id="status-texto">Desligado</span> <span id="status-icone"></span>
+            </div>
+        </div>
+
+        <div id="controles">
+            <button id="ligar">Ligar</button>
+            <button id="desligar">Desligar</button>
+            <button id="acelerar">Acelerar</button>
+            <button id="frear">Frear</button>
+            <button id="buzinar">Buzinar</button>
+            <button id="turbo">Turbo (Carro Esportivo)</button>
+            <button id="carregar">Carregar (Caminhão)</button>
+        </div>
+
+        <div id="velocidade-display">
+            Velocidade: <span id="velocidade-valor">0</span> km/h
+            <div id="velocidade-barra"></div>
+        </div>
+
+        <div id="alertas-container">
+            <!-- Alertas serão adicionados aqui dinamicamente -->
+        </div>
+    </div>
+
+    <audio id="som-buzina" src="sounds/buzina.mp3" preload="auto"></audio>
+    <audio id="som-acelerar" src="sounds/acelerar.mp3" preload="auto"></audio>
+    <audio id="som-frear" src="sounds/frear.mp3" preload="auto"></audio>
+    <audio id="som-ligar" src="sounds/ligar.mp3" preload="auto"></audio>
+    <audio id="som-desligar" src="sounds/desligar.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
 </body>
 </html>
