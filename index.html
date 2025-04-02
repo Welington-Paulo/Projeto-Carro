@@ -3,60 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garagem Inteligente</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Garagem Inteligente - Interativa</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <!-- Optional: Add a datepicker library if desired -->
 </head>
 <body>
+    <h1>Garagem Inteligente - Sistema Interativo</h1>
 
-    <div class="container">
-        <h1>Garagem Inteligente</h1>
-
-        <div id="selecao-veiculo">
-            <button data-veiculo="carro">Carro</button>
-            <button data-veiculo="carro_esportivo">Carro Esportivo</button>
-            <button data-veiculo="caminhao">Caminhão</button>
-            <button data-veiculo="moto">Moto</button> <!-- Nova linha -->
-        </div>
-
-
-
-
-        
-        <div id="veiculo-detalhes">
-            <h2 id="veiculo-titulo"></h2>
-            <img id="veiculo-imagem" src="" alt="Imagem do Veículo">
-            <div id="veiculo-info"></div>
-            <div id="status-veiculo">
-                Status: <span id="status-texto">Desligado</span> <span id="status-icone"></span>
-            </div>
-        </div>
-
-        <div id="controles">
-            <button id="ligar">Ligar</button>
-            <button id="desligar">Desligar</button>
-            <button id="acelerar">Acelerar</button>
-            <button id="frear">Frear</button>
-            <button id="buzinar">Buzinar</button>
-            <button id="turbo">Turbo (Carro Esportivo)</button>
-            <button id="carregar">Carregar (Caminhão)</button>
-        </div>
-
-        <div id="velocidade-display">
-            Velocidade: <span id="velocidade-valor">0</span> km/h
-            <div id="velocidade-barra"></div>
-        </div>
-
-        <div id="alertas-container">
-            <!-- Alertas serão adicionados aqui dinamicamente -->
-        </div>
+    <!-- Styled Alert Container -->
+    <div id="custom-alert" class="alert" style="display: none;">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">×</span>
+        <span id="custom-alert-message"></span>
     </div>
 
-    <audio id="som-buzina" src="sounds/buzina.mp3" preload="auto"></audio>
-    <audio id="som-acelerar" src="sounds/acelerar.mp3" preload="auto"></audio>
-    <audio id="som-frear" src="sounds/frear.mp3" preload="auto"></audio>
-    <audio id="som-ligar" src="sounds/ligar.mp3" preload="auto"></audio>
-    <audio id="som-desligar" src="sounds/desligar.mp3" preload="auto"></audio>
+    <div class="container">
+        <!-- Seção para Adicionar Veículos -->
+        <section id="adicionar-veiculo">
+            <h2>Adicionar Novo Veículo</h2>
+            <form id="form-add-veiculo">
+                <!-- ... (campos existentes: tipo, modelo, placa) ... -->
+                 <label for="tipo-veiculo">Tipo:</label>
+                 <select id="tipo-veiculo" required>
+                    <option value="Carro">Carro</option>
+                    <option value="CarroEsportivo">Carro Esportivo</option>
+                    <option value="Caminhao">Caminhão</option>
+                    <option value="Moto">Moto</option> <!-- Added Moto -->
+                </select>
 
-    <script src="script.js"></script>
+                 <label for="modelo">Modelo:</label>
+                 <input type="text" id="modelo" required>
+
+                 <label for="placa">Placa:</label>
+                 <input type="text" id="placa" required pattern="[A-Z]{3}-[0-9]{4}" placeholder="AAA-1234">
+
+
+                <label for="cor" id="label-cor">Cor:</label>
+                <input type="text" id="cor">
+
+                <label for="eixos" id="label-eixos">Nº Eixos:</label>
+                <input type="number" id="eixos" min="2">
+
+                <label for="capacidade" id="label-capacidade">Capacidade Carga (kg):</label>
+                <input type="number" id="capacidade" min="0">
+
+
+                <button type="submit">Adicionar Veículo</button>
+            </form>
+        </section>
+
+        <!-- Seção para Listar Veículos -->
+        <section id="lista-veiculos-section">
+            <h2>Veículos na Garagem</h2>
+            <div id="lista-veiculos">
+                <!-- Veículos serão listados aqui via JS -->
+                <!-- Exemplo de item (será gerado dinamicamente):
+                <div class="veiculo-item">
+                    <img src="images/carro.png" alt="Carro" class="veiculo-imagem-lista">
+                    <div class="veiculo-info">
+                        <p><strong>Modelo (Placa)</strong> - Status: <span class="status-indicator status-desligado"></span> Desligado</p>
+                    </div>
+                    <div class="veiculo-acoes"> ... botões ... </div>
+                </div>
+                 -->
+            </div>
+        </section>
+
+         <!-- Seção Detalhes do Veículo e Interação -->
+        <section id="detalhes-veiculo-section" style="display: none;">
+             <h2 id="detalhes-titulo">Detalhes e Interação</h2>
+             <button id="btn-voltar-lista" >Voltar para Lista</button>
+             <input type="hidden" id="detalhes-veiculo-placa"> <!-- Para saber qual veículo está ativo -->
+
+            <div class="detalhes-grid">
+                <div class="detalhes-imagem">
+                    <img id="detalhes-imagem-veiculo" src="" alt="Imagem do Veículo" >
+                </div>
+                <div class="detalhes-info">
+                    <h3>Informações</h3>
+                    <p id="info-veiculo"></p>
+                    <p>Status: <span id="detalhes-status-indicator" class="status-indicator"></span> <span id="detalhes-status-texto"></span></p>
+                    <p>Velocidade Atual: <span id="detalhes-velocidade">0</span> km/h</p>
+                    <!-- Velocímetro Visual -->
+                    <div id="velocimetro-container">
+                         <div id="velocimetro-barra" style="width: 0%;"></div>
+                    </div>
+                    <p id="info-carga" style="display:none;">Carga: <span id="detalhes-carga-atual">0</span> / <span id="detalhes-carga-capacidade">0</span> kg</p>
+                </div>
+                <div class="detalhes-controles">
+                     <h3>Controles</h3>
+                     <button id="btn-ligar-desligar">Ligar/Desligar</button>
+                     <button id="btn-acelerar">Acelerar (+10)</button>
+                     <button id="btn-frear">Frear (-15)</button>
+                     <button id="btn-buzinar">Buzinar</button>
+                     <button id="btn-turbo" style="display:none; background-color: #ff8c00;">Ativar Turbo</button>
+                     <div id="controles-carga" style="display:none; margin-top: 10px;">
+                         <input type="number" id="input-carga" placeholder="Peso (kg)" min="1">
+                         <button id="btn-carregar">Carregar</button>
+                         <button id="btn-descarregar">Descarregar</button>
+                     </div>
+                </div>
+                <div class="detalhes-manutencao">
+                     <h3>Histórico de Manutenção</h3>
+                     <div id="historico-manutencao"></div>
+
+                     <h3>Agendar Nova Manutenção</h3>
+                     <form id="form-agendar-manutencao">
+                         <input type="hidden" id="manutencao-veiculo-placa">
+                         <!-- ... (campos de manutenção existentes) ... -->
+                         <label for="manutencao-data">Data:</label>
+                        <input type="date" id="manutencao-data" required>
+
+                        <label for="manutencao-tipo">Tipo de Serviço:</label>
+                        <input type="text" id="manutencao-tipo" required placeholder="Ex: Troca de óleo">
+
+                        <label for="manutencao-custo">Custo (R$):</label>
+                        <input type="number" id="manutencao-custo" min="0" step="0.01" required>
+
+                        <label for="manutencao-descricao">Descrição (Opcional):</label>
+                        <textarea id="manutencao-descricao" rows="3"></textarea>
+
+                         <button type="submit">Agendar/Registrar</button>
+                     </form>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Seção para Agendamentos Futuros Gerais -->
+        <section id="agendamentos-futuros-section">
+            <h2>Próximos Agendamentos</h2>
+            <div id="lista-agendamentos-futuros"></div>
+        </section>
+    </div>
+
+    <!-- Elementos de Áudio -->
+    <audio id="audio-buzina" src="audio/buzina.wav" preload="auto"></audio>
+    <audio id="audio-acelerar" src="audio/acelerar.wav" preload="auto"></audio>
+    <audio id="audio-frear" src="audio/frear.wav" preload="auto"></audio>
+    <audio id="audio-ligar" src="audio/ligar.wav" preload="auto"></audio>
+    <audio id="audio-desligar" src="audio/desligar.wav" preload="auto"></audio>
+
+    <!-- Controle de Volume (Opcional) -->
+    <div class="volume-control">
+        <label for="volume">Volume:</label>
+        <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5">
+    </div>
+
+
+    <script src="JS/script.js"></script>
 </body>
 </html>
