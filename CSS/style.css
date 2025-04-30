@@ -1,399 +1,108 @@
-/* --- Global Styles & Variables --- */
-:root {
-    --primary-color: #4CAF50; /* Green */
-    --secondary-color: #2196F3; /* Blue */
-    --warning-color: #ff9800; /* Orange */
-    --danger-color: #f44336; /* Red */
-    --light-gray: #f8f9fa;
-    --medium-gray: #e9ecef;
-    --dark-gray: #6c757d;
-    --text-color: #343a40;
-    --border-color: #dee2e6;
-    --border-radius: 5px;
-    --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    --transition-speed: 0.3s;
-}
-
-*, *::before, *::after {
-    box-sizing: border-box; /* Apply box-sizing globally */
-}
-
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 20px;
-    background-color: var(--light-gray);
-    color: var(--text-color);
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-h1, h2, h3 {
-    color: var(--text-color);
-    margin-top: 0; /* Remove default top margin */
-    margin-bottom: 1.2rem; /* Consistent bottom spacing */
-}
-
-h1 {
-    text-align: center;
-    color: var(--primary-color);
-    margin-bottom: 2rem;
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 0.5rem;
-    font-weight: 600;
-}
-
-h2 {
-    border-bottom: 1px solid var(--medium-gray);
-    padding-bottom: 0.4rem;
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--secondary-color);
-}
-
-h3 {
-    font-size: 1.2rem;
-    color: var(--dark-gray);
-    margin-bottom: 0.8rem;
-    font-weight: 500;
-}
-
-a {
-    color: var(--secondary-color);
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* --- Layout Container --- */
 .container {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 30px;
-    max-width: 1300px; /* Slightly wider */
-    margin: auto;
-    background: #ffffff;
-    padding: 25px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    border: 1px solid var(--border-color);
-}
-
-/* Responsive Grid Adjustment */
-@media (max-width: 992px) { /* Adjust breakpoint if needed */
-    .container {
-        grid-template-columns: 1fr;
-    }
-    /* Reorder sections visually if desired */
-    #lista-veiculos-section { order: 1; }
-    #adicionar-veiculo { order: 2; }
-    #detalhes-veiculo-section { order: 3; }
-    #agendamentos-futuros-section { order: 4; }
-}
-
-section {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
     padding: 20px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    background-color: #fff;
-    margin-bottom: 20px; /* Consistent spacing between sections */
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* --- Forms Styling --- */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Space between form elements */
+h1, h2 {
+    color: #0056b3;
 }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
-    font-size: 0.95em;
-    color: var(--dark-gray);
+.vehicle-selection,
+.interaction-buttons,
+.maintenance-form,
+.maintenance-history,
+.future-schedules {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
 }
 
-input[type="text"],
-input[type="number"],
-input[type="date"],
-input[type="datetime-local"],
-select,
-textarea {
-    width: 100%; /* Use full width */
-    padding: 10px 12px; /* More padding */
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    font-size: 1em;
-    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-    background-color: var(--light-gray); /* Subtle background */
+.vehicle-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
 }
 
-input[type="text"]:focus,
-input[type="number"]:focus,
-input[type="date"]:focus,
-input[type="datetime-local"]:focus,
-select:focus,
-textarea:focus {
-    border-color: var(--secondary-color);
-    outline: none; /* Remove default outline */
-    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2); /* Subtle focus ring */
-    background-color: #fff;
-}
-
-textarea {
-    min-height: 80px; /* Reasonable default height */
-    resize: vertical; /* Allow vertical resize */
-}
-
-/* Hide specific fields by default */
-#label-cor, #cor,
-#label-eixos, #eixos {
-    display: none;
-}
-
-/* --- Button Styling --- */
-button {
-    padding: 10px 18px;
-    border: none;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 500;
-    transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-    text-align: center;
-    display: inline-block; /* Align correctly if needed */
-}
-
-button:hover {
-    transform: translateY(-1px); /* Subtle lift */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-button:active {
-    transform: translateY(0px); /* Press down */
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15);
-}
-
-button:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3); /* Focus ring matching primary color */
-}
-
-/* Primary Button (Submit / Add) */
-form button[type="submit"] {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-form button[type="submit"]:hover {
-    background-color: #45a049; /* Darker Green */
-}
-form button[type="submit"]:focus {
-     box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.4);
-}
-
-/* Warning Button (Back / View) */
-#btn-voltar-lista,
-.veiculo-acoes button:first-of-type { /* Target "Ver/Agendar" */
-    background-color: var(--warning-color);
-    color: white;
-}
-
-#btn-voltar-lista:hover,
-.veiculo-acoes button:first-of-type:hover {
-    background-color: #e68a00; /* Darker Orange */
-}
-#btn-voltar-lista:focus,
-.veiculo-acoes button:first-of-type:focus {
-     box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.4);
-}
-
-
-/* Danger Button (Remove) */
-.veiculo-acoes button[style*="d9534f"] { /* Target remove button by its specific style */
-    background-color: var(--danger-color);
-    color: white;
-}
-.veiculo-acoes button[style*="d9534f"]:hover {
-    background-color: #d32f2f; /* Darker Red */
-}
-.veiculo-acoes button[style*="d9534f"]:focus {
-     box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.4);
-}
-
-
-/* --- Vehicle List Styling --- */
-#lista-veiculos {
-    margin-top: 15px;
-}
-
-.veiculo-item {
-    background-color: #fff;
-    border: 1px solid var(--border-color);
-    padding: 15px 20px;
-    margin-bottom: 15px;
-    border-radius: var(--border-radius);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    gap: 10px;
-    transition: box-shadow var(--transition-speed) ease;
-}
-
-.veiculo-item:hover {
-    box-shadow: var(--box-shadow);
-}
-
-.veiculo-info p {
-    margin: 3px 0; /* Reduced margin */
-    font-size: 0.95em;
-}
-.veiculo-info strong {
-    color: var(--text-color);
-}
-
-.veiculo-acoes {
-    display: flex;
-    gap: 8px; /* Space between action buttons */
-    flex-shrink: 0; /* Prevent buttons from shrinking too much */
-}
-
-.veiculo-acoes button {
-    padding: 6px 12px; /* Smaller buttons for actions */
-    font-size: 0.9em;
-}
-
-/* --- Details Section Styling --- */
-#detalhes-veiculo-section h3 {
-     margin-top: 1.5rem; /* Add space above sub-section titles */
-}
-#detalhes-veiculo-section #info-veiculo p {
-     font-size: 1.1em;
-     margin-bottom: 1rem;
-}
-#btn-voltar-lista {
-     margin-bottom: 1.5rem; /* More space after back button */
-     display: inline-block; /* Make it inline */
-}
-
-/* --- Maintenance & Appointment Item Styling --- */
-#historico-manutencao, #lista-agendamentos-futuros {
+.vehicle-status {
+    font-weight: bold;
     margin-top: 10px;
-    padding-left: 15px; /* Indent items slightly */
-    border-left: 3px solid var(--medium-gray); /* Visual separator */
 }
 
-.manutencao-item, .agendamento-item {
-    background-color: var(--light-gray);
+.vehicle-status span {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+}
+
+.velocity-bar progress {
+    width: 100%;
+    height: 20px;
+    border-radius: 5px;
+}
+
+.interaction-buttons button,
+.vehicle-selection button,
+.maintenance-form button {
+    background-color: #007bff;
+    color: white;
     padding: 10px 15px;
-    margin-bottom: 8px;
-    border-radius: var(--border-radius);
-    font-size: 0.95em;
-    border: 1px solid var(--border-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s ease;
 }
 
-.agendamento-item strong { /* Highlight vehicle name in future appointments */
-    color: var(--secondary-color);
+.interaction-buttons button:hover,
+.vehicle-selection button:hover,
+.maintenance-form button:hover {
+    background-color: #0056b3;
 }
 
-
-
-
-
-
-/* --- Vehicle List Styling --- */
-#lista-veiculos {
-    margin-top: 15px;
+.maintenance-form label {
+    display: block;
+    margin-top: 5px;
+    color: #555;
 }
 
-.veiculo-item {
-    background-color: #fff;
-    border: 1px solid var(--border-color);
-    padding: 15px 20px;
-    margin-bottom: 15px;
-    border-radius: var(--border-radius);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    transition: box-shadow var(--transition-speed) ease;
+.maintenance-form input[type="text"],
+.maintenance-form input[type="number"],
+.maintenance-form input[type="date"],
+.maintenance-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
-.veiculo-item:hover {
-    box-shadow: var(--box-shadow);
+.maintenance-history ul,
+.future-schedules ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-/* --- Adjust Image Size Here --- */
-.veiculo-imagem-lista {
-    width: 40px; /* << CHANGED: Adjust this value (e.g., 35px, 45px) as needed */
-    height: auto; /* Maintain aspect ratio */
-    margin-right: 15px; /* Space between image and text */
-    vertical-align: middle; /* Align with text */
-    flex-shrink: 0; /* Prevent image from shrinking in flex layout */
-}
-/* ----------------------------- */
-
-
-.veiculo-info p {
-    margin: 3px 0;
-    font-size: 0.95em;
-}
-.veiculo-info strong {
-    color: var(--text-color);
+.maintenance-history li,
+.future-schedules li {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
 }
 
-.veiculo-acoes {
-    display: flex;
-    gap: 8px;
-    flex-shrink: 0;
+.maintenance-history li:last-child,
+.future-schedules li:last-child {
+    border-bottom: none;
 }
-
-.veiculo-acoes button {
-    padding: 6px 12px;
-    font-size: 0.9em;
-}
-
-/* ... rest of your CSS ... */
-
-
-
-/* --- Details Section Styling --- */
-#detalhes-veiculo-section h3 {
-    margin-top: 1.5rem;
-}
-#detalhes-veiculo-section #info-veiculo p {
-    font-size: 1.1em;
-    margin-bottom: 1rem;
-}
-#btn-voltar-lista {
-    margin-bottom: 1.5rem;
-    display: inline-block;
-}
-
-/* --- Adjust Detail Image Size Here --- */
-#detalhes-imagem-veiculo {
-   max-width: 250px; /* << CHANGED/ADDED: Adjust this value (e.g., 200px, 300px) */
-   height: auto; /* Maintain aspect ratio */
-   border-radius: var(--border-radius);
-   margin-bottom: 15px;
-   display: block; /* Prevents potential inline spacing issues */
-   margin-left: auto; /* Optional: Center the image if grid column is wider */
-   margin-right: auto; /* Optional: Center the image */
-   border: 1px solid var(--border-color); /* Optional: Add a subtle border */
-   box-shadow: var(--box-shadow); /* Optional: Add shadow */
-}
-/* ----------------------------------- */
-
-
-/* Layout da Seção de Detalhes */
-.detalhes-grid {
-   display: grid;
-   /* ... other grid styles ... */
-}
-
-/* ... rest of your CSS ... */
