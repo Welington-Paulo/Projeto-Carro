@@ -1,0 +1,12 @@
+body {
+    font-family: sans-serif;
+  }
+  
+  #imagemCarro {
+    width: 200px;
+  }
+  
+  button {
+    padding: 10px;
+    margin: 5px;
+  }
