@@ -1,46 +1,63 @@
-/**
- * Classe para caminhões, que herda de Veiculo.
- */
+// JS/Caminhao.js
 class Caminhao extends Veiculo {
-    /**
-     * Cria um novo caminhão.
-     * @param {string} modelo O modelo do caminhão.
-     * @param {string} cor A cor do caminhão.
-     * @param {number} capacidadeCarga A capacidade de carga do caminhão em kg.
-     */
-    constructor(modelo, cor, capacidadeCarga) {
-        super(modelo, cor);
-        this.capacidadeCarga = capacidadeCarga;
+    constructor(marca, modelo, ano, placa, cor, historicoManutencao = [], capacidadeCarga = 5000) {
+        super(marca, modelo, ano, placa, cor, historicoManutencao);
+        this.capacidadeCarga = parseFloat(capacidadeCarga) || 5000;
         this.cargaAtual = 0;
     }
 
-    /**
-     * Carrega o caminhão.
-     * @param {number} quantidade A quantidade de carga a ser adicionada.
-     */
-    carregar(quantidade) {
-        if (this.cargaAtual + quantidade <= this.capacidadeCarga) {
-            this.cargaAtual += quantidade;
-            console.log(`${this.modelo} carregado com ${quantidade} kg. Carga atual: ${this.cargaAtual} kg`);
+    carregar(peso) {
+        peso = parseFloat(peso);
+        if (isNaN(peso) || peso <= 0) return "Peso inválido para carregar.";
+        if (this.cargaAtual + peso <= this.capacidadeCarga) {
+            this.cargaAtual += peso;
+            return `${this.modelo} carregado com ${peso.toFixed(1)} kg. Carga: ${this.cargaAtual.toFixed(1)} kg.`;
         } else {
-            console.log(`${this.modelo} não pode carregar essa quantidade. Capacidade máxima excedida.`);
+            const espaco = this.capacidadeCarga - this.cargaAtual;
+            if (espaco > 0) {
+                this.cargaAtual += espaco;
+                return `Capacidade excedida! Carregado com ${espaco.toFixed(1)} kg (limite). Carga: ${this.cargaAtual.toFixed(1)} kg.`;
+            }
+            return `Capacidade máxima (${this.capacidadeCarga.toFixed(1)} kg) já atingida.`;
         }
     }
 
-    /**
-     * Descarrega o caminhão.
-     * @param {number} quantidade A quantidade de carga a ser removida.
-     */
-    descarregar(quantidade) {
-        this.cargaAtual = Math.max(0, this.cargaAtual - quantidade);
-        console.log(`${this.modelo} descarregado com ${quantidade} kg. Carga atual: ${this.cargaAtual} kg`);
+    descarregar(peso) {
+        peso = parseFloat(peso);
+        if (isNaN(peso) || peso <= 0) return "Peso inválido para descarregar.";
+        if (this.cargaAtual - peso >= 0) {
+            this.cargaAtual -= peso;
+            return `${this.modelo} descarregado em ${peso.toFixed(1)} kg. Carga: ${this.cargaAtual.toFixed(1)} kg.`;
+        } else {
+            const descarregado = this.cargaAtual;
+            this.cargaAtual = 0;
+            return `${this.modelo} descarregado (total ${descarregado.toFixed(1)} kg). Carga: 0 kg.`;
+        }
     }
 
-    /**
-     * Sobrescreve o método exibirInformacoes() para incluir a capacidade de carga e a carga atual.
-     * @returns {string} Uma string formatada com as informações do caminhão.
-     */
+    getVelocidadeMaximaPermitida() {
+        const velBase = 120;
+        const fatorCarga = this.capacidadeCarga > 0 ? (this.cargaAtual / this.capacidadeCarga) : 0;
+        return Math.max(60, Math.round(velBase * (1 - fatorCarga * 0.4))); 
+    }
+    
+    exibirDetalhesCard() {
+        return `${super.exibirDetalhesBase()}, Carga: ${this.cargaAtual.toFixed(0)}/${this.capacidadeCarga.toFixed(0)}kg, Motor: ${this.ligado ? 'ON' : 'OFF'}, Vel: ${this.velocidade}km/h`;
+    }
+
     exibirInformacoes() {
-        return `${super.exibirInformacoes()}, Capacidade de Carga: ${this.capacidadeCarga} kg, Carga Atual: ${this.cargaAtual} kg`;
+        return `
+            ${super.exibirInformacoes()}<br>
+            <strong>Capacidade Carga:</strong> ${this.capacidadeCarga.toFixed(1)} kg<br>
+            <strong>Carga Atual:</strong> ${this.cargaAtual.toFixed(1)} kg<br>
+            <strong>Vel. Máx. Permitida (Atual):</strong> ${this.getVelocidadeMaximaPermitida().toFixed(0)} km/h
+        `;
+    }
+
+    toJSON() {
+        const json = super.toJSON();
+        json.capacidadeCarga = this.capacidadeCarga;
+        json.cargaAtual = this.cargaAtual; // Salva a carga atual
+        return json;
     }
 }

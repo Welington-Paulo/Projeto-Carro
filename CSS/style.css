@@ -1,108 +1,384 @@
+/* CSS/style.css - Tema Dark Minimalista com Destaques */
+:root {
+    --cor-fundo-principal: #1a1d24; /* Azul escuro quase preto */
+    --cor-fundo-secundario: #242933; /* Azul escuro um pouco mais claro para containers */
+    --cor-fundo-terciario: #2f3642; /* Para elementos internos como inputs, cards */
+    --cor-texto-principal: #e0e7ef; /* Cinza claro/branco suave */
+    --cor-texto-secundario: #a0aec0; /* Cinza médio */
+    --cor-destaque-vibrante: #00BFFF; /* Azul Elétrico (DeepSkyBlue) */
+    --cor-destaque-sucesso: #28a745; /* Verde */
+    --cor-destaque-erro: #dc3545;   /* Vermelho */
+    --cor-destaque-aviso: #ffc107;  /* Amarelo */
+    --cor-borda: #4a5568; /* Cinza escuro para bordas sutis */
+    --sombra-suave: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f4f4f4;
-    color: #333;
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: var(--cor-fundo-principal);
+    color: var(--cor-texto-principal);
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+header {
+    background-color: var(--cor-fundo-secundario);
+    color: var(--cor-texto-principal);
+    padding: 1.2rem 2rem;
+    box-shadow: var(--sombra-suave);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--cor-destaque-vibrante);
+}
+header h1 { margin: 0; font-size: 1.8em; font-weight: 300;}
+header h1 span { font-weight: 600; color: var(--cor-destaque-vibrante); }
+
+nav .nav-button {
+    background-color: transparent;
+    color: var(--cor-texto-secundario);
+    border: 1px solid var(--cor-borda);
+    padding: 0.6rem 1.2rem;
+    margin-left: 0.8rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    font-weight: 500;
+}
+nav .nav-button:hover {
+    background-color: var(--cor-destaque-vibrante);
+    color: var(--cor-fundo-principal);
+    border-color: var(--cor-destaque-vibrante);
+}
+nav .nav-button.active {
+    background-color: var(--cor-destaque-vibrante);
+    color: var(--cor-fundo-principal);
+    border-color: var(--cor-destaque-vibrante);
+    font-weight: 700;
+}
+
+main {
+    padding: 25px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: var(--cor-fundo-secundario);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: var(--sombra-suave);
+    margin-bottom: 25px;
+    border: 1px solid var(--cor-borda);
 }
 
-h1, h2 {
-    color: #0056b3;
+h2 {
+    color: var(--cor-destaque-vibrante);
+    border-bottom: 1px solid var(--cor-borda);
+    padding-bottom: 12px;
+    margin-top: 0;
+    font-size: 1.6em;
+    font-weight: 400;
+}
+h3 {
+    color: var(--cor-texto-principal);
+    font-size: 1.3em;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-weight: 500;
 }
 
-.vehicle-selection,
-.interaction-buttons,
-.maintenance-form,
-.maintenance-history,
-.future-schedules {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-.vehicle-image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-}
-
-.vehicle-status {
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.vehicle-status span {
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: white;
-}
-
-.velocity-bar progress {
-    width: 100%;
-    height: 20px;
-    border-radius: 5px;
-}
-
-.interaction-buttons button,
-.vehicle-selection button,
-.maintenance-form button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.interaction-buttons button:hover,
-.vehicle-selection button:hover,
-.maintenance-form button:hover {
-    background-color: #0056b3;
-}
-
-.maintenance-form label {
-    display: block;
-    margin-top: 5px;
-    color: #555;
-}
-
-.maintenance-form input[type="text"],
-.maintenance-form input[type="number"],
-.maintenance-form input[type="date"],
-.maintenance-form textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+label { display: block; margin-top: 12px; margin-bottom: 6px; font-weight: 500; color: var(--cor-texto-secundario); }
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+    width: calc(100% - 24px);
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
     box-sizing: border-box;
+    background-color: var(--cor-fundo-terciario);
+    color: var(--cor-texto-principal);
+    font-size: 1em;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: var(--cor-destaque-vibrante);
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 191, 255, 0.25);
+}
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a0aec0'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 1.2em;
+    padding-right: 30px;
 }
 
-.maintenance-history ul,
-.future-schedules ul {
+button, .btn-principal {
+    background-color: var(--cor-destaque-vibrante);
+    color: var(--cor-fundo-principal);
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 12px;
+    margin-right: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.1s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+button:hover, .btn-principal:hover {
+    background-color: #00a3cc;
+    transform: translateY(-1px);
+}
+button:disabled {
+    background-color: var(--cor-borda);
+    color: var(--cor-texto-secundario);
+    cursor: not-allowed;
+}
+
+button.secondary {
+    background-color: var(--cor-fundo-terciario);
+    color: var(--cor-texto-secundario);
+    border: 1px solid var(--cor-borda);
+    text-transform: none;
+    letter-spacing: 0;
+}
+button.secondary:hover {
+    background-color: var(--cor-borda);
+    color: var(--cor-texto-principal);
+}
+button.danger {
+    background-color: var(--cor-destaque-erro);
+    color: white;
+    text-transform: none;
+    letter-spacing: 0;
+}
+button.danger:hover { background-color: #c82333; }
+
+
+/* Abas */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Layout de Colunas */
+#gerenciar-veiculos { display: flex; gap: 25px; flex-wrap: wrap; }
+.coluna-esquerda { flex: 1; min-width: 340px; }
+.coluna-direita { flex: 2; min-width: 420px; }
+
+/* Painel de Interação */
+.painel-interacao-veiculo { border-top: 3px solid var(--cor-destaque-vibrante); }
+.painel-interacao-veiculo #nome-veiculo-interacao { font-weight: 600; color: var(--cor-destaque-vibrante); }
+.info-box {
+    background-color: var(--cor-fundo-terciario);
+    padding: 18px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid var(--cor-borda);
+    color: var(--cor-texto-secundario);
+}
+.info-box strong { color: var(--cor-texto-principal); font-weight: 500; }
+
+.controles-interacao { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+.botoes-acoes {
+    flex: 1;
+    padding: 15px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    background: var(--cor-fundo-secundario);
+}
+.botoes-acoes button { display: block; width: 100%; margin-bottom: 10px; text-transform: none; letter-spacing: 0;}
+.botoes-acoes button:last-child { margin-bottom: 0; }
+
+.acao-com-input { display: flex; align-items: center; margin-top: 10px; }
+.acao-com-input button { flex-grow: 1; margin-right: 10px; }
+.acao-com-input input[type="number"] { width: 80px; padding: 10px; }
+
+.container-log-interacoes { margin-top: 20px; }
+.log-box {
+    background-color: #121418;
+    color: var(--cor-texto-secundario);
+    padding: 15px;
+    border-radius: 6px;
+    max-height: 200px;
+    overflow-y: auto;
+    list-style-type: none;
+    font-family: 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    border: 1px solid var(--cor-borda);
+}
+.log-box li { padding: 4px 2px; border-bottom: 1px solid #2a2e37; }
+.log-box li:last-child { border-bottom: none; }
+.log-box li.log-erro { color: #ff8c8c; }
+.log-box li.log-aviso { color: #ffd78c; }
+.log-box li.log-info { color: var(--cor-destaque-vibrante); }
+.log-box li:not([class^="log-"]) { color: #8a93a2; }
+
+
+/* Cards de Veículos */
+#garagem-display-cards ul {
     list-style-type: none;
     padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+}
+#garagem-display-cards li {
+    background-color: var(--cor-fundo-terciario);
+    padding: 18px;
+    border-radius: 8px;
+    border: 1px solid var(--cor-borda);
+    box-shadow: var(--sombra-suave);
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+#garagem-display-cards li:hover {
+    border-color: var(--cor-destaque-vibrante);
+    box-shadow: 0 4px 12px rgba(0, 191, 255, 0.1);
+}
+#garagem-display-cards li.card-selecionado {
+    border-left: 5px solid var(--cor-destaque-vibrante);
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.2);
+    background-color: #2a303b;
 }
 
-.maintenance-history li,
-.future-schedules li {
-    padding: 8px;
-    border-bottom: 1px solid #eee;
-}
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.card-header strong { color: var(--cor-destaque-vibrante); font-size: 1.2em; font-weight: 500; }
+.card-header span { font-size: 0.9em; color: var(--cor-texto-secundario); }
+.card-detalhes { margin: 8px 0 12px; font-size: 0.95em; color: var(--cor-texto-secundario); flex-grow: 1; }
 
-.maintenance-history li:last-child,
-.future-schedules li:last-child {
+.botoes-veiculo-card {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--cor-borda);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.botoes-veiculo-card button {
+    padding: 8px 12px;
+    font-size: 0.9em;
+    flex-grow: 1;
+    text-transform: none;
+    letter-spacing: 0;
+    margin-top: 0; /* Reset margin-top para botões de card */
+}
+.btn-card-selecionar { background-color: var(--cor-destaque-vibrante) !important; color: var(--cor-fundo-principal) !important;}
+.btn-card-selecionar:hover { background-color: #00a3cc !important; }
+
+
+.historico-veiculo { margin-top: 12px; background: var(--cor-fundo-principal); padding: 10px; border-radius: 4px;}
+.historico-veiculo h4 { margin: 0 0 8px; font-size: 1em; color: var(--cor-texto-principal); font-weight: 500; }
+.historico-veiculo ul { padding-left: 18px; list-style-type: disc; margin: 0; }
+.historico-veiculo li { font-size: 0.9em; color: var(--cor-texto-secundario); margin-bottom: 4px; }
+
+
+/* Modal de Agendamento (Estilo Dark) */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.7); }
+.modal-content {
+    background-color: var(--cor-fundo-secundario);
+    color: var(--cor-texto-principal);
+    margin: 8% auto;
+    padding: 30px;
+    border: 1px solid var(--cor-borda);
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+.modal-content h3 { margin-top: 0; color: var(--cor-destaque-vibrante); }
+.close-button { color: var(--cor-texto-secundario); position: absolute; top: 15px; right: 25px; font-size: 32px; font-weight: bold; }
+.close-button:hover, .close-button:focus { color: var(--cor-destaque-vibrante); text-decoration: none; cursor: pointer; }
+
+/* Área de Notificações (Toasts) */
+.notificacao-area { position: fixed; bottom: 20px; right: 20px; z-index: 1050; width: auto; max-width: 380px; top: auto; }
+.notificacao {
+    background-color: var(--cor-fundo-terciario);
+    color: var(--cor-texto-principal);
+    padding: 18px 25px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    box-shadow: var(--sombra-suave);
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    border-left: 5px solid var(--cor-destaque-vibrante);
+}
+.notificacao.show { opacity: 1; transform: translateX(0); }
+.notificacao.sucesso { border-left-color: var(--cor-destaque-sucesso); background-color: #1f3c2a; }
+.notificacao.erro { border-left-color: var(--cor-destaque-erro); background-color: #4d2227; }
+.notificacao.aviso { border-left-color: var(--cor-destaque-aviso); background-color: #4d3f1c; color: #fff3cd;}
+
+/* Seção de Históricos Consolidados */
+#historicos-consolidados-view .historico-consolidado-veiculo {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: var(--cor-fundo-terciario);
+    border-radius: 8px;
+    border: 1px solid var(--cor-borda);
+}
+#historicos-consolidados-view h4 {
+    color: var(--cor-destaque-vibrante);
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.25em;
+    border-bottom: 1px solid var(--cor-borda);
+    padding-bottom: 10px;
+}
+#historicos-consolidados-view ul {
+    list-style: none;
+    padding-left: 0;
+}
+#historicos-consolidados-view ul li {
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--cor-borda);
+    font-size: 0.95em;
+    color: var(--cor-texto-secundario);
+}
+#historicos-consolidados-view ul li:last-child {
     border-bottom: none;
+}
+
+
+/* Agendamentos Futuros e Lembretes no Tema Dark */
+#agendamentos-futuros-view ul, #lembretes-manutencao-view ul { list-style-type: none; padding: 0; }
+#agendamentos-futuros-view li, #lembretes-manutencao-view li {
+    background-color: var(--cor-fundo-terciario);
+    color: var(--cor-texto-secundario);
+    padding: 12px;
+    margin-bottom: 10px;
+    border-left: 5px solid var(--cor-destaque-vibrante);
+    border-radius: 6px;
+}
+#lembretes-manutencao-view li.hoje {
+    border-left-color: var(--cor-destaque-erro);
+    background-color: rgba(220, 53, 69, 0.2);
+    color: #f8d7da;
+}
+#lembretes-manutencao-view li.amanha {
+    border-left-color: var(--cor-destaque-aviso);
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #fff3cd;
+}
+
+/* Ações específicas de veículo (para esconder/mostrar botões) */
+.acao-especifica { display: none; }
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 25px;
+    border-top: 1px solid var(--cor-borda);
+    font-size: 0.9em;
+    color: var(--cor-texto-secundario);
 }

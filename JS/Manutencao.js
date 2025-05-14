@@ -1,49 +1,56 @@
-/**
- * Classe para representar uma manutenção.
- */
+// JS/Manutencao.js
 class Manutencao {
-    /**
-     * Cria uma nova manutenção.
-     * @param {string} data A data da manutenção (formato YYYY-MM-DD).
-     * @param {string} tipo O tipo de serviço realizado.
-     * @param {number} custo O custo da manutenção.
-     * @param {string} [descricao] Uma descrição detalhada do serviço (opcional).
-     */
-    constructor(data, tipo, custo, descricao = "") {
+    constructor(data, tipo, custo, descricao = '') {
+        if (!this.validarDados(data, tipo, custo)) {
+            throw new Error("Dados inválidos para criar manutenção: Data, tipo e custo são obrigatórios e o custo deve ser positivo.");
+        }
         this.data = data;
         this.tipo = tipo;
-        this.custo = custo;
+        this.custo = parseFloat(custo);
         this.descricao = descricao;
     }
 
-    /**
-     * Retorna uma representação formatada da manutenção.
-     * @returns {string} Uma string formatada com as informações da manutenção.
-     */
-    getDescricaoFormatada() {
-        return `${this.tipo} em ${this.data} - R$${this.custo}`;
+    formatarManutencao() {
+        const dataObj = new Date(this.data + 'T00:00:00'); 
+        const dataFormatada = dataObj.toLocaleDateString('pt-BR', { timeZone: 'UTC' }); 
+        return `${this.tipo} em ${dataFormatada} - R$${this.custo.toFixed(2)}${this.descricao ? ' (' + this.descricao + ')' : ''}`;
     }
 
-    /**
-     * Valida os dados da manutenção.
-     * @returns {boolean} True se os dados são válidos, false caso contrário.
-     */
-    validarDados() {
-        if (!this.data || !this.tipo || this.custo === undefined || this.custo === null) {
-            alert("Por favor, preencha todos os campos obrigatórios da manutenção.");
+    validarDados(data, tipo, custo) {
+        if (!data || !tipo || custo === undefined || custo === null) {
+            console.error("Manutencao.validarDados: Data, tipo e custo são obrigatórios.");
             return false;
         }
-
-        if (isNaN(new Date(this.data).getTime())) {
-            alert("Data inválida. Use o formato AAAA-MM-DD.");
+        if (isNaN(parseFloat(custo)) || parseFloat(custo) < 0) {
+            console.error("Manutencao.validarDados: Custo deve ser um número positivo.");
             return false;
         }
-
-        if (typeof this.custo !== 'number' || this.custo <= 0) {
-            alert("Custo inválido. Deve ser um número positivo.");
+        try {
+            if (isNaN(new Date(data + 'T00:00:00').getTime())) {
+                console.error("Manutencao.validarDados: Data inválida.");
+                return false;
+            }
+        } catch (e) {
+            console.error("Manutencao.validarDados: Erro ao validar data.", e);
             return false;
         }
-
         return true;
+    }
+
+    toJSON() {
+        return {
+            _class: 'Manutencao',
+            data: this.data,
+            tipo: this.tipo,
+            custo: this.custo,
+            descricao: this.descricao,
+        };
+    }
+
+    static fromJSON(json) {
+        if (json._class !== 'Manutencao') {
+            throw new Error("Objeto JSON não é do tipo Manutencao para desserialização.");
+        }
+        return new Manutencao(json.data, json.tipo, json.custo, json.descricao);
     }
 }

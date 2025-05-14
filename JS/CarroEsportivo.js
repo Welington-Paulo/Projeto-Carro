@@ -1,38 +1,53 @@
-/**
- * Classe para carros esportivos, que herda de Carro.
- */
+// JS/CarroEsportivo.js
 class CarroEsportivo extends Carro {
-    /**
-     * Cria um novo carro esportivo.
-     * @param {string} modelo O modelo do carro esportivo.
-     * @param {string} cor A cor do carro esportivo.
-     */
-    constructor(modelo, cor) {
-        super(modelo, cor, 2); // Carros esportivos geralmente têm 2 portas
+    constructor(marca, modelo, ano, placa, cor, historicoManutencao = [], velocidadeMaximaTurbo = 300) {
+        super(marca, modelo, ano, placa, cor, historicoManutencao, 2);
         this.turboAtivado = false;
+        this.velocidadeMaximaBase = super.getVelocidadeMaximaPermitida();
+        this.velocidadeMaximaTurbo = parseInt(velocidadeMaximaTurbo) || 300;
     }
 
-    /**
-     * Ativa o turbo do carro esportivo.
-     */
     ativarTurbo() {
-        this.turboAtivado = true;
-        console.log(`${this.modelo} turbo ativado!`);
+        if (!this.ligado) return `${this.modelo} precisa estar ligado para ativar o turbo.`;
+        if (!this.turboAtivado) {
+            this.turboAtivado = true;
+            return `Turbo do ${this.modelo} ATIVADO!`;
+        }
+        return `Turbo do ${this.modelo} já está ativado.`;
     }
 
-    /**
-     * Desativa o turbo do carro esportivo.
-     */
     desativarTurbo() {
-        this.turboAtivado = false;
-        console.log(`${this.modelo} turbo desativado.`);
+        if (this.turboAtivado) {
+            this.turboAtivado = false;
+            if (this.velocidade > this.velocidadeMaximaBase) {
+                this.velocidade = this.velocidadeMaximaBase;
+                return `Turbo DESATIVADO! Velocidade ajustada para ${this.velocidade} km/h.`;
+            }
+            return `Turbo do ${this.modelo} DESATIVADO!`;
+        }
+        return `Turbo do ${this.modelo} já está desativado.`;
     }
 
-    /**
-     * Sobrescreve o método exibirInformacoes() para incluir o status do turbo.
-     * @returns {string} Uma string formatada com as informações do carro esportivo.
-     */
+    getVelocidadeMaximaPermitida() {
+        return this.turboAtivado ? this.velocidadeMaximaTurbo : this.velocidadeMaximaBase;
+    }
+
+    exibirDetalhesCard() {
+        return `${super.exibirDetalhesCard().replace(`, Motor: ${this.ligado ? 'ON' : 'OFF'}, Vel: ${this.velocidade}km/h`,'')}, Vel.Máx: ${this.getVelocidadeMaximaPermitida()} km/h, Turbo: ${this.turboAtivado ? '<span style="color:orange;">ON</span>' : 'OFF'}, Motor: ${this.ligado ? 'ON' : 'OFF'}, Vel: ${this.velocidade}km/h`;
+    }
+
     exibirInformacoes() {
-        return `${super.exibirInformacoes()}, Turbo: ${this.turboAtivado ? 'Ativado' : 'Desativado'}`;
+        return `
+            ${super.exibirInformacoes()}<br>
+            <strong>Turbo:</strong> ${this.turboAtivado ? '<span style="color:var(--cor-destaque-aviso); font-weight:bold;">ATIVADO</span>' : 'Desativado'}<br>
+            <strong>Vel. Máx. Permitida (Atual):</strong> ${this.getVelocidadeMaximaPermitida()} km/h
+        `;
+    }
+
+    toJSON() {
+        const json = super.toJSON();
+        json.velocidadeMaximaTurbo = this.velocidadeMaximaTurbo;
+        json.turboAtivado = this.turboAtivado; // Salva o estado do turbo
+        return json;
     }
 }

@@ -1,21 +1,166 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>Garagem Inteligente</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garagem Inteligente Pro</title>
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
-  <h1>Meu Carro</h1>
+    <header>
+        <h1>Garagem Inteligente <span>Pro</span></h1>
+        <nav>
+            <button class="nav-button active" data-target="gerenciar-veiculos">Gerenciar & Interagir</button>
+            <button class="nav-button" data-target="visao-manutencoes">Visão Geral Manutenções</button>
+            <button class="nav-button" data-target="historicos-completos">Históricos Completos</button>
+        </nav>
+    </header>
 
-  <img id="imagemCarro" src="caminho/para/sua/imagem.jpg" alt="Imagem do Carro">
+    <main>
+        <div id="notificacao-area" class="notificacao-area"></div>
 
-  <p id="infoCarro">Modelo: <span id="modeloCarro"></span> | Cor: <span id="corCarro"></span> | Velocidade: <span id="velocidadeCarro">0</span> km/h</p>
+        <section id="gerenciar-veiculos" class="tab-content active">
+            <div class="coluna-esquerda">
+                <div class="container">
+                    <h2>Adicionar Novo Veículo</h2>
+                    <form id="form-add-veiculo">
+                        <label for="tipo-veiculo">Tipo:</label>
+                        <select id="tipo-veiculo" name="tipo-veiculo" required>
+                            <option value="Carro">Carro</option>
+                            <option value="CarroEsportivo">Carro Esportivo</option>
+                            <option value="Caminhao">Caminhão</option>
+                            <option value="Veiculo">Veículo Genérico</option>
+                        </select>
+                        <label for="marca">Marca:</label>
+                        <input type="text" id="marca" name="marca" required>
+                        <label for="modelo">Modelo:</label>
+                        <input type="text" id="modelo" name="modelo" required>
+                        <label for="ano">Ano:</label>
+                        <input type="number" id="ano" name="ano" min="1900" max="2099" step="1" required>
+                        <label for="placa">Placa:</label>
+                        <input type="text" id="placa" name="placa" required pattern="[A-Z]{3}-?[0-9][A-Z0-9][0-9]{2}" title="Formato AAA-1234 ou AAA1B34">
+                        <label for="cor">Cor:</label>
+                        <input type="text" id="cor" name="cor" value="Branco">
 
-  <button id="ligarBtn">Ligar</button>
-  <button id="desligarBtn">Desligar</button>
-  <button id="acelerarBtn">Acelerar</button>
+                        <div id="campos-carro" class="campos-especificos">
+                            <label for="numero-portas">Número de Portas:</label>
+                            <input type="number" id="numero-portas" name="numero-portas" value="4" min="1">
+                        </div>
+                        <div id="campos-carroesportivo" class="campos-especificos" style="display: none;">
+                            <label for="velocidade-maxima-turbo">Vel. Máx. Turbo (km/h):</label>
+                            <input type="number" id="velocidade-maxima-turbo" name="velocidade-maxima-turbo" value="300" min="0">
+                        </div>
+                        <div id="campos-caminhao" class="campos-especificos" style="display: none;">
+                            <label for="capacidade-carga">Capacidade de Carga (kg):</label>
+                            <input type="number" id="capacidade-carga" name="capacidade-carga" value="5000" min="0">
+                        </div>
+                        <button type="submit" class="btn-principal">Adicionar Veículo</button>
+                    </form>
+                </div>
 
-  <script src="js/script.js"></script>
-  <script src="js/Carro.js"></script>
+                <div class="container painel-interacao-veiculo">
+                    <h2>Painel de Interação: <span id="nome-veiculo-interacao">Nenhum</span></h2>
+                    <div id="informacoesVeiculoSelecionado" class="info-box">
+                        <p>Selecione um veículo na lista da garagem para interagir.</p>
+                    </div>
+                    <div class="controles-interacao">
+                        <div id="botoesAcoesComuns" class="botoes-acoes">
+                            <button data-acao="ligar">Ligar</button>
+                            <button data-acao="desligar">Desligar</button>
+                            <button data-acao="acelerar">Acelerar</button>
+                            <button data-acao="frear">Frear</button>
+                            <button data-acao="buzinar">Buzinar</button>
+                        </div>
+                        <div id="botoesAcoesEspecificas" class="botoes-acoes">
+                            <button data-acao="ativarTurbo" class="acao-especifica carroesportivo-action">Ativar Turbo</button>
+                            <button data-acao="desativarTurbo" class="acao-especifica carroesportivo-action">Desativar Turbo</button>
+                            <div class="acao-com-input acao-especifica caminhao-action">
+                                <button data-acao="carregar">Carregar</button>
+                                <input type="number" id="input-carga" placeholder="Peso (kg)" value="100" min="0">
+                            </div>
+                             <div class="acao-com-input acao-especifica caminhao-action">
+                                <button data-acao="descarregar">Descarregar</button>
+                                <input type="number" id="input-descarga" placeholder="Peso (kg)" value="50" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-log-interacoes">
+                        <h3>Log de Interações Recentes:</h3>
+                        <ul id="logInteracoesVeiculo" class="log-box">
+                            <li>Nenhuma interação ainda.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="coluna-direita">
+                <div class="container">
+                    <h2>Veículos na Garagem</h2>
+                    <div id="garagem-display-cards">
+                        <p>Carregando veículos...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="visao-manutencoes" class="tab-content">
+            <div class="container">
+                <h2>Agendamentos Futuros</h2>
+                <div id="agendamentos-futuros-view">
+                    <p>Nenhum agendamento futuro.</p>
+                </div>
+            </div>
+            <div class="container">
+                <h2>Lembretes Importantes</h2>
+                <div id="lembretes-manutencao-view">
+                    <p>Nenhum lembrete ativo.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="historicos-completos" class="tab-content">
+            <div class="container">
+                <h2>Histórico de Manutenção de Todos os Veículos</h2>
+                <div id="historicos-consolidados-view">
+                    <p>Carregando históricos...</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="modal-agendamento" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="fecharModalAgendamento()">×</span>
+            <h3>Agendar Manutenção para <span id="modal-veiculo-placa"></span></h3>
+            <form id="form-agendar-manutencao">
+                <input type="hidden" id="agendamento-placa-veiculo" name="placa-veiculo">
+                <label for="agendamento-data">Data:</label>
+                <input type="date" id="agendamento-data" name="data" required>
+                <label for="agendamento-hora">Hora (opcional):</label>
+                <input type="time" id="agendamento-hora" name="hora">
+                <label for="agendamento-tipo">Tipo de Serviço:</label>
+                <input type="text" id="agendamento-tipo" name="tipo" required placeholder="Ex: Troca de óleo">
+                <label for="agendamento-custo">Custo Estimado (R$):</label>
+                <input type="number" id="agendamento-custo" name="custo" step="0.01" min="0" required>
+                <label for="agendamento-descricao">Descrição (opcional):</label>
+                <textarea id="agendamento-descricao" name="descricao" rows="3"></textarea>
+                <button type="submit" class="btn-principal">Agendar</button>
+                <button type="button" class="secondary" onclick="fecharModalAgendamento()">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Garagem Inteligente Pro</p>
+    </footer>
+
+    <script src="JS/Manutencao.js"></script>
+    <script src="JS/Veiculo.js"></script>
+    <script src="JS/Carro.js"></script>
+    <script src="JS/CarroEsportivo.js"></script>
+    <script src="JS/Caminhao.js"></script>
+    <script src="JS/Garagem.js"></script>
+    <script src="JS/script.js"></script> 
 </body>
 </html>

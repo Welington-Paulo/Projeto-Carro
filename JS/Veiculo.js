@@ -1,141 +1,156 @@
-/**
- * Classe base para veículos.
- */
+// JS/Veiculo.js
 class Veiculo {
-    /**
-     * Cria um novo veículo.
-     * @param {string} modelo O modelo do veículo.
-     * @param {string} cor A cor do veículo.
-     */
-    constructor(modelo, cor) {
+    constructor(marca, modelo, ano, placa, cor = "Branco", historicoManutencao = []) {
+        if (!marca || !modelo || !ano || !placa) {
+            throw new Error("Marca, modelo, ano e placa são obrigatórios para criar um veículo.");
+        }
+        this.marca = marca;
         this.modelo = modelo;
+        this.ano = parseInt(ano);
+        this.placa = placa.toUpperCase();
         this.cor = cor;
+        this.status = "Disponível"; 
+
         this.ligado = false;
         this.velocidade = 0;
-        this.historicoManutencao = [];
+
+        this.historicoManutencao = historicoManutencao.map(m =>
+            m instanceof Manutencao ? m : Manutencao.fromJSON(m)
+        );
     }
 
-    /**
-     * Liga o veículo.
-     */
     ligar() {
         if (!this.ligado) {
             this.ligado = true;
-            console.log(`${this.modelo} ligado.`);
-            const somLigar = document.getElementById("somLigar");
-            if (somLigar) {
-                somLigar.play();
-            }
-        } else {
-            alert("O veículo já está ligado.");
+            this.status = "Ligado"; 
+            return `${this.modelo} agora está ligado.`;
         }
-
+        return `${this.modelo} já está ligado.`;
     }
 
-    /**
-     * Desliga o veículo.
-     */
     desligar() {
-       if (this.ligado) {
-           this.ligado = false;
-            this.velocidade = 0;
-            console.log(`${this.modelo} desligado.`);
-            const somDesligar = document.getElementById("somDesligar");
-            if (somDesligar) {
-                somDesligar.play();
-            }
-       } else {
-           alert("O veículo já está desligado.")
-       }
-    }
-
-    /**
-     * Acelera o veículo.
-     * @param {number} incremento A quantidade a ser incrementada na velocidade.
-     */
-    acelerar(incremento) {
         if (this.ligado) {
-            const somAcelerar = document.getElementById("somAcelerar");
-                if (somAcelerar){
-                    somAcelerar.play();
-                }
-            this.velocidade += incremento;
-            this.velocidade = Math.min(this.velocidade, 200); // Limita a velocidade máxima
-            console.log(`${this.modelo} acelerando. Velocidade atual: ${this.velocidade}`);
-            this.atualizarVelocidadeBarra(); // Chama a função para atualizar a barra de progresso
-        } else {
-            console.log(`${this.modelo} não pode acelerar, pois está desligado.`);
-            alert("O veículo está desligado, não é possível acelerar.");
-        }
-    }
-
-    /**
-     * Freia o veículo.
-     * @param {number} decremento A quantidade a ser decrementada na velocidade.
-     */
-    frear(decremento) {
-        if (this.velocidade > 0){
-             this.velocidade = Math.max(0, this.velocidade - decremento);
-             console.log(`${this.modelo} freando. Velocidade atual: ${this.velocidade}`);
-             const somFrear = document.getElementById("somFrear");
-                if (somFrear){
-                    somFrear.play();
-                }
-             this.atualizarVelocidadeBarra(); // Chama a função para atualizar a barra de progresso
-        }else {
-            alert("O veículo já está parado.")
-        }
-
-
-    }
-
-    /**
-     * Buzina o veículo.
-     */
-    buzinar() {
-         const somBuzina = document.getElementById("somBuzina");
-                if (somBuzina){
-                    somBuzina.play();
-                }
-        console.log(`${this.modelo} BUZZZZ!`);
-    }
-
-    /**
-     * Exibe informações básicas do veículo.
-     * @returns {string} Uma string formatada com as informações do veículo.
-     */
-    exibirInformacoes() {
-        return `Modelo: ${this.modelo}, Cor: ${this.cor}, Ligado: ${this.ligado ? 'Sim' : 'Não'}, Velocidade: ${this.velocidade}`;
-    }
-
-    /**
-     * Atualiza a barra de velocidade.
-     */
-    atualizarVelocidadeBarra() {
-            const velocidadeBarra = document.getElementById("velocidadeBarra");
-            if (velocidadeBarra) {
-                velocidadeBarra.value = this.velocidade;
+            if (this.velocidade > 0) {
+                return `${this.modelo} não pode ser desligado em movimento! (Vel: ${this.velocidade} km/h).`;
             }
+            this.ligado = false;
+            this.velocidade = 0;
+            this.status = "Disponível"; 
+            return `${this.modelo} agora está desligado.`;
         }
-
-    /**
-     * Adiciona uma manutenção ao histórico.
-     * @param {Manutencao} manutencao O objeto Manutencao a ser adicionado.
-     */
-    adicionarManutencao(manutencao) {
-        if (manutencao.validarDados()) {
-            this.historicoManutencao.push(manutencao);
-            console.log(`Manutenção adicionada ao histórico de ${this.modelo}`);
-        } else {
-            console.log("Dados da manutenção inválidos. Não foi adicionada ao histórico.");
-        }
+        return `${this.modelo} já está desligado.`;
     }
 
-    /**
-     * Retorna o histórico de manutenção formatado para exibição.
-     * @returns {string[]} Um array de strings formatadas com as informações das manutenções.
-     */
-    getHistoricoManutencaoFormatado() {
-        return this.historicoManutencao.map(manutencao => manutencao.getDescricaoFormatada());
+    acelerar(incremento = 10) {
+        if (!this.ligado) {
+            return `${this.modelo} precisa estar ligado para acelerar.`;
+        }
+        const velMaxima = this.getVelocidadeMaximaPermitida();
+        if (this.velocidade + incremento <= velMaxima) {
+            this.velocidade += incremento;
+        } else {
+            this.velocidade = velMaxima;
+        }
+        this.status = this.velocidade > 0 ? "Em Movimento" : "Ligado";
+        return `${this.modelo} ${this.velocidade === velMaxima ? 'atingiu vel. máx. de' : 'acelerou para'} ${this.velocidade} km/h.`;
+    }
+
+    frear(decremento = 10) {
+        if (this.velocidade - decremento >= 0) {
+            this.velocidade -= decremento;
+        } else {
+            this.velocidade = 0;
+        }
+        this.status = this.velocidade > 0 ? "Em Movimento" : (this.ligado ? "Ligado" : "Disponível");
+        return `${this.modelo} ${this.velocidade === 0 ? 'parou' : 'freou para ' + this.velocidade + ' km/h'}.`;
+    }
+
+    buzinar() {
+        return `${this.constructor.name} ${this.modelo} buzina: Beep! Beep!`;
+    }
+
+    getVelocidadeMaximaPermitida() {
+        return 180; 
+    }
+
+    exibirDetalhesBase() { 
+        return `Marca: ${this.marca}, Modelo: ${this.modelo}, Ano: ${this.ano}, Placa: ${this.placa}, Cor: ${this.cor}`;
+    }
+
+    exibirInformacoes() {
+        return `
+            <strong>Tipo:</strong> ${this.constructor.name}<br>
+            <strong>Modelo:</strong> ${this.modelo} (${this.marca}, ${this.ano})<br>
+            <strong>Placa:</strong> ${this.placa}<br>
+            <strong>Cor:</strong> ${this.cor}<br>
+            <strong>Status Geral:</strong> ${this.status}<br>
+            <strong>Motor:</strong> ${this.ligado ? 'Ligado <span style="color:var(--cor-destaque-sucesso);">⬤</span>' : 'Desligado <span style="color:var(--cor-destaque-erro);">⬤</span>'}<br>
+            <strong>Velocidade:</strong> ${this.velocidade} km/h
+        `;
+    }
+
+    adicionarManutencao(manutencao) {
+        if (!(manutencao instanceof Manutencao)) {
+            throw new Error("Objeto de manutenção inválido.");
+        }
+        this.historicoManutencao.push(manutencao);
+        this.historicoManutencao.sort((a, b) => new Date(b.data) - new Date(a.data));
+    }
+
+    formatarHistoricoManutencao() {
+        if (this.historicoManutencao.length === 0) {
+            return "Nenhuma manutenção registrada.";
+        }
+        return this.historicoManutencao
+            .map(manutencao => `<li>${manutencao.formatarManutencao()}</li>`)
+            .join('');
+    }
+
+    toJSON() {
+        return {
+            _class: this.constructor.name,
+            marca: this.marca,
+            modelo: this.modelo,
+            ano: this.ano,
+            placa: this.placa,
+            cor: this.cor,
+            status: this.status,
+            ligado: this.ligado,
+            velocidade: this.velocidade,
+            historicoManutencao: this.historicoManutencao.map(m => m.toJSON()),
+        };
+    }
+
+    static fromJSON(json) {
+        let veiculo;
+        switch (json._class) {
+            case 'Carro':
+                veiculo = new Carro(json.marca, json.modelo, json.ano, json.placa, json.cor, [], json.numeroPortas);
+                break;
+            case 'CarroEsportivo':
+                veiculo = new CarroEsportivo(json.marca, json.modelo, json.ano, json.placa, json.cor, [], json.velocidadeMaximaTurbo);
+                if (json.hasOwnProperty('turboAtivado')) veiculo.turboAtivado = json.turboAtivado;
+                break;
+            case 'Caminhao':
+                veiculo = new Caminhao(json.marca, json.modelo, json.ano, json.placa, json.cor, [], json.capacidadeCarga);
+                if (json.hasOwnProperty('cargaAtual')) veiculo.cargaAtual = json.cargaAtual;
+                break;
+            case 'Veiculo':
+                 veiculo = new Veiculo(json.marca, json.modelo, json.ano, json.placa, json.cor);
+                 break;
+            default:
+                console.error("Veiculo.fromJSON: Tipo desconhecido:", json._class, json);
+                throw new Error(`Tipo de veículo desconhecido para deserialização: ${json._class}`);
+        }
+        veiculo.status = json.status || "Disponível";
+        veiculo.ligado = json.ligado === true; // Garante que seja booleano
+        veiculo.velocidade = json.velocidade || 0;
+        if (json.historicoManutencao && Array.isArray(json.historicoManutencao)) {
+            veiculo.historicoManutencao = json.historicoManutencao.map(mJson => Manutencao.fromJSON(mJson));
+            veiculo.historicoManutencao.sort((a, b) => new Date(b.data) - new Date(a.data));
+        } else {
+            veiculo.historicoManutencao = [];
+        }
+        return veiculo;
     }
 }
