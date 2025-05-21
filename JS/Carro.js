@@ -5,11 +5,11 @@ class Carro extends Veiculo {
         this.numeroPortas = parseInt(numeroPortas) || 4;
     }
 
-    exibirDetalhesCard() {
+    exibirDetalhesCard() { 
         return `${super.exibirDetalhesBase()}, Portas: ${this.numeroPortas}, Motor: ${this.ligado ? 'ON' : 'OFF'}, Vel: ${this.velocidade}km/h`;
     }
     
-    exibirInformacoes() {
+    exibirInformacoes() { 
         return `
             ${super.exibirInformacoes()}<br>
             <strong>Portas:</strong> ${this.numeroPortas}

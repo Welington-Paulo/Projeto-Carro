@@ -42,7 +42,7 @@ class Garagem {
     
     selecionarVeiculoPorReferencia(veiculo) {
         if (veiculo instanceof Veiculo && this.veiculos.includes(veiculo)) {
-            if (this.veiculoSelecionado !== veiculo) { // Só registra se a seleção mudar
+            if (this.veiculoSelecionado !== veiculo) { 
                 this.veiculoSelecionado = veiculo;
                 this.registrarInteracao(`Veículo "${veiculo.modelo}" selecionado para interação.`);
             }
@@ -133,6 +133,8 @@ class Garagem {
         veiculosOrdenados.forEach(veiculo => {
             const isSelecionado = this.veiculoSelecionado === veiculo;
             const detalhesCard = veiculo.exibirDetalhesCard ? veiculo.exibirDetalhesCard() : veiculo.exibirDetalhesBase();
+            const detalhesEspecificosCard = detalhesCard.replace(veiculo.exibirDetalhesBase() + ', ', '');
+
 
             listaHtml += `
                 <li class="${isSelecionado ? 'card-selecionado' : ''}" data-placa-veiculo="${veiculo.placa}">
@@ -140,7 +142,7 @@ class Garagem {
                         <strong>${veiculo.constructor.name} - ${veiculo.modelo}</strong>
                         <span>Placa: ${veiculo.placa}</span>
                     </div>
-                    <p class="card-detalhes">${detalhesCard.replace(veiculo.exibirDetalhesBase() + ', ', '')}</p>
+                    <p class="card-detalhes">${detalhesEspecificosCard}</p>
                     <div class="botoes-veiculo-card">
                         <button class="btn-card-selecionar" data-placa="${veiculo.placa}">Interagir</button>
                         <button class="btn-card-agendar secondary" onclick="abrirModalAgendamento('${veiculo.placa}')">Agendar Man.</button>
@@ -157,7 +159,6 @@ class Garagem {
         return listaHtml;
     }
 
-
     encontrarVeiculo(placa) {
         const placaUpperCase = placa.toUpperCase();
         return this.veiculos.find(v => v.placa.toUpperCase() === placaUpperCase);
@@ -166,7 +167,7 @@ class Garagem {
     salvarNoLocalStorage() {
         try {
             const veiculosParaSalvar = this.veiculos.map(v => v.toJSON());
-            localStorage.setItem('garagemInteligentePro', JSON.stringify(veiculosParaSalvar)); // Nova chave para evitar conflitos
+            localStorage.setItem('garagemInteligenteProConnect', JSON.stringify(veiculosParaSalvar));
             console.log("Garagem salva no LocalStorage.");
         } catch (error) {
             console.error("Erro ao salvar garagem no LocalStorage:", error);
@@ -175,7 +176,7 @@ class Garagem {
     }
 
     carregarDoLocalStorage() {
-        const dadosSalvos = localStorage.getItem('garagemInteligentePro'); // Nova chave
+        const dadosSalvos = localStorage.getItem('garagemInteligenteProConnect');
         if (dadosSalvos) {
             try {
                 const veiculosArray = JSON.parse(dadosSalvos);

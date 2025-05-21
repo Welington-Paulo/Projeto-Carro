@@ -3,7 +3,7 @@ class CarroEsportivo extends Carro {
     constructor(marca, modelo, ano, placa, cor, historicoManutencao = [], velocidadeMaximaTurbo = 300) {
         super(marca, modelo, ano, placa, cor, historicoManutencao, 2);
         this.turboAtivado = false;
-        this.velocidadeMaximaBase = super.getVelocidadeMaximaPermitida();
+        this.velocidadeMaximaBase = super.getVelocidadeMaximaPermitida(); 
         this.velocidadeMaximaTurbo = parseInt(velocidadeMaximaTurbo) || 300;
     }
 
@@ -33,7 +33,8 @@ class CarroEsportivo extends Carro {
     }
 
     exibirDetalhesCard() {
-        return `${super.exibirDetalhesCard().replace(`, Motor: ${this.ligado ? 'ON' : 'OFF'}, Vel: ${this.velocidade}km/h`,'')}, Vel.Máx: ${this.getVelocidadeMaximaPermitida()} km/h, Turbo: ${this.turboAtivado ? '<span style="color:orange;">ON</span>' : 'OFF'}, Motor: ${this.ligado ? 'ON' : 'OFF'}, Vel: ${this.velocidade}km/h`;
+        let baseDetails = super.exibirDetalhesCard().replace(`, Motor: ${this.ligado ? 'ON' : 'OFF'}, Vel: ${this.velocidade}km/h`, '');
+        return `${baseDetails}, Vel.Máx: ${this.getVelocidadeMaximaPermitida()} km/h, Turbo: ${this.turboAtivado ? '<span style="color:var(--cor-destaque-aviso);">ON</span>' : 'OFF'}, Motor: ${this.ligado ? 'ON' : 'OFF'}, Vel: ${this.velocidade}km/h`;
     }
 
     exibirInformacoes() {
@@ -47,7 +48,7 @@ class CarroEsportivo extends Carro {
     toJSON() {
         const json = super.toJSON();
         json.velocidadeMaximaTurbo = this.velocidadeMaximaTurbo;
-        json.turboAtivado = this.turboAtivado; // Salva o estado do turbo
+        json.turboAtivado = this.turboAtivado;
         return json;
     }
 }

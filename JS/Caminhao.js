@@ -57,7 +57,7 @@ class Caminhao extends Veiculo {
     toJSON() {
         const json = super.toJSON();
         json.capacidadeCarga = this.capacidadeCarga;
-        json.cargaAtual = this.cargaAtual; // Salva a carga atual
+        json.cargaAtual = this.cargaAtual;
         return json;
     }
 }

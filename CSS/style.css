@@ -1,15 +1,15 @@
 /* CSS/style.css - Tema Dark Minimalista com Destaques */
 :root {
-    --cor-fundo-principal: #1a1d24; /* Azul escuro quase preto */
-    --cor-fundo-secundario: #242933; /* Azul escuro um pouco mais claro para containers */
-    --cor-fundo-terciario: #2f3642; /* Para elementos internos como inputs, cards */
-    --cor-texto-principal: #e0e7ef; /* Cinza claro/branco suave */
-    --cor-texto-secundario: #a0aec0; /* Cinza médio */
-    --cor-destaque-vibrante: #00BFFF; /* Azul Elétrico (DeepSkyBlue) */
-    --cor-destaque-sucesso: #28a745; /* Verde */
-    --cor-destaque-erro: #dc3545;   /* Vermelho */
-    --cor-destaque-aviso: #ffc107;  /* Amarelo */
-    --cor-borda: #4a5568; /* Cinza escuro para bordas sutis */
+    --cor-fundo-principal: #1a1d24;
+    --cor-fundo-secundario: #242933;
+    --cor-fundo-terciario: #2f3642;
+    --cor-texto-principal: #e0e7ef;
+    --cor-texto-secundario: #a0aec0;
+    --cor-destaque-vibrante: #00BFFF;
+    --cor-destaque-sucesso: #28a745;
+    --cor-destaque-erro: #dc3545;
+    --cor-destaque-aviso: #ffc107;
+    --cor-borda: #4a5568;
     --sombra-suave: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -164,17 +164,13 @@ button.danger {
 }
 button.danger:hover { background-color: #c82333; }
 
-
-/* Abas */
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* Layout de Colunas */
 #gerenciar-veiculos { display: flex; gap: 25px; flex-wrap: wrap; }
 .coluna-esquerda { flex: 1; min-width: 340px; }
 .coluna-direita { flex: 2; min-width: 420px; }
 
-/* Painel de Interação */
 .painel-interacao-veiculo { border-top: 3px solid var(--cor-destaque-vibrante); }
 .painel-interacao-veiculo #nome-veiculo-interacao { font-weight: 600; color: var(--cor-destaque-vibrante); }
 .info-box {
@@ -186,6 +182,13 @@ button.danger:hover { background-color: #c82333; }
     color: var(--cor-texto-secundario);
 }
 .info-box strong { color: var(--cor-texto-principal); font-weight: 500; }
+.info-box .info-divider {
+    border: 0;
+    height: 1px;
+    background-color: var(--cor-borda);
+    margin: 15px 0;
+}
+
 
 .controles-interacao { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
 .botoes-acoes {
@@ -222,8 +225,6 @@ button.danger:hover { background-color: #c82333; }
 .log-box li.log-info { color: var(--cor-destaque-vibrante); }
 .log-box li:not([class^="log-"]) { color: #8a93a2; }
 
-
-/* Cards de Veículos */
 #garagem-display-cards ul {
     list-style-type: none;
     padding: 0;
@@ -270,19 +271,16 @@ button.danger:hover { background-color: #c82333; }
     flex-grow: 1;
     text-transform: none;
     letter-spacing: 0;
-    margin-top: 0; /* Reset margin-top para botões de card */
+    margin-top: 0;
 }
 .btn-card-selecionar { background-color: var(--cor-destaque-vibrante) !important; color: var(--cor-fundo-principal) !important;}
 .btn-card-selecionar:hover { background-color: #00a3cc !important; }
-
 
 .historico-veiculo { margin-top: 12px; background: var(--cor-fundo-principal); padding: 10px; border-radius: 4px;}
 .historico-veiculo h4 { margin: 0 0 8px; font-size: 1em; color: var(--cor-texto-principal); font-weight: 500; }
 .historico-veiculo ul { padding-left: 18px; list-style-type: disc; margin: 0; }
 .historico-veiculo li { font-size: 0.9em; color: var(--cor-texto-secundario); margin-bottom: 4px; }
 
-
-/* Modal de Agendamento (Estilo Dark) */
 .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.7); }
 .modal-content {
     background-color: var(--cor-fundo-secundario);
@@ -300,7 +298,6 @@ button.danger:hover { background-color: #c82333; }
 .close-button { color: var(--cor-texto-secundario); position: absolute; top: 15px; right: 25px; font-size: 32px; font-weight: bold; }
 .close-button:hover, .close-button:focus { color: var(--cor-destaque-vibrante); text-decoration: none; cursor: pointer; }
 
-/* Área de Notificações (Toasts) */
 .notificacao-area { position: fixed; bottom: 20px; right: 20px; z-index: 1050; width: auto; max-width: 380px; top: auto; }
 .notificacao {
     background-color: var(--cor-fundo-terciario);
@@ -319,7 +316,6 @@ button.danger:hover { background-color: #c82333; }
 .notificacao.erro { border-left-color: var(--cor-destaque-erro); background-color: #4d2227; }
 .notificacao.aviso { border-left-color: var(--cor-destaque-aviso); background-color: #4d3f1c; color: #fff3cd;}
 
-/* Seção de Históricos Consolidados */
 #historicos-consolidados-view .historico-consolidado-veiculo {
     margin-bottom: 25px;
     padding: 20px;
@@ -349,8 +345,6 @@ button.danger:hover { background-color: #c82333; }
     border-bottom: none;
 }
 
-
-/* Agendamentos Futuros e Lembretes no Tema Dark */
 #agendamentos-futuros-view ul, #lembretes-manutencao-view ul { list-style-type: none; padding: 0; }
 #agendamentos-futuros-view li, #lembretes-manutencao-view li {
     background-color: var(--cor-fundo-terciario);
@@ -371,8 +365,101 @@ button.danger:hover { background-color: #c82333; }
     color: #fff3cd;
 }
 
-/* Ações específicas de veículo (para esconder/mostrar botões) */
 .acao-especifica { display: none; }
+
+/* Estilos para a Seção de Planejamento de Viagem Adaptados */
+#planejar-viagem h2 {
+    /* Já estilizado globalmente */
+}
+
+.form-group-viagem {
+    margin-bottom: 20px;
+}
+.form-group-viagem label {
+    /* Já estilizado globalmente */
+}
+.form-group-viagem select {
+    /* Já estilizado globalmente */
+}
+
+.search-box-viagem {
+    margin-bottom: 25px;
+}
+.search-box-viagem label {
+    display: block;
+    margin-bottom: 8px; 
+}
+
+.input-group-viagem {
+    display: flex;
+    gap: 10px;
+}
+
+#cityInputViagem {
+    flex-grow: 1;
+}
+
+#searchButtonViagem {
+    text-transform: none; 
+    letter-spacing: 0;
+}
+
+/* Renomeado para resultadoViagemCompleto no HTML, mas podemos usar a classe .info-box para estilo base */
+#resultadoViagemCompleto { /* Usando o ID para o container geral dos resultados da viagem */
+    margin-top: 25px;
+    /* Herda estilos de .info-box */
+    text-align: left; /* Para alinhar o conteúdo dentro do box */
+}
+
+#resultadoViagemCompleto h3 { /* Para o título "Viagem com..." e "Previsão para..." */
+    color: var(--cor-destaque-vibrante);
+    margin-bottom: 10px;
+    font-size: 1.25em; /* Ajuste conforme necessário */
+}
+#resultadoViagemCompleto p {
+    margin: 8px 0;
+    color: var(--cor-texto-secundario);
+}
+#resultadoViagemCompleto strong {
+    color: var(--cor-texto-principal);
+}
+#resultadoViagemCompleto img { /* Estilo para o ícone do tempo */
+    width: 70px; 
+    height: 70px; 
+    background-color: rgba(0,0,0,0.15); 
+    border-radius: 50%;
+    margin-right: 15px; /* Espaço à direita do ícone */
+}
+/* Div para agrupar ícone e texto principal da previsão */
+.previsao-atual-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+.previsao-atual-header .temperatura-principal {
+    font-size: 1.8em; /* Destaque para a temperatura */
+    margin:0; 
+    color: var(--cor-texto-principal);
+}
+.previsao-atual-header .descricao-principal {
+    text-transform: capitalize; 
+    margin:0;
+    font-size: 1.1em;
+}
+
+
+.error-message-viagem {
+    color: var(--cor-destaque-erro);
+    background-color: rgba(220, 53, 69, 0.15); 
+    border: 1px solid var(--cor-destaque-erro);
+    padding: 12px 15px; 
+    border-radius: 6px;
+    margin-top: 20px;
+    display: none; 
+    text-align: center; /* Centralizar mensagem de erro */
+}
+
 
 footer {
     text-align: center;

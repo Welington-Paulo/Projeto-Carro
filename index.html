@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garagem Inteligente Pro</title>
+    <title>Garagem Inteligente Pro Connect</title>
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
     <header>
-        <h1>Garagem Inteligente <span>Pro</span></h1>
+        <h1>Garagem Inteligente <span>Pro Connect</span></h1>
         <nav>
             <button class="nav-button active" data-target="gerenciar-veiculos">Gerenciar & Interagir</button>
             <button class="nav-button" data-target="visao-manutencoes">Visão Geral Manutenções</button>
             <button class="nav-button" data-target="historicos-completos">Históricos Completos</button>
+            <button class="nav-button" data-target="planejar-viagem">Planejar Viagem</button>
         </nav>
     </header>
 
@@ -127,6 +128,38 @@
             </div>
         </section>
 
+        <section id="planejar-viagem" class="tab-content">
+            <div class="container">
+                <h2>Planejador de Viagem: Previsão do Tempo no Destino</h2>
+                
+                <div class="form-group-viagem">
+                    <label for="viagem-veiculo">Selecione o Veículo para a Viagem:</label>
+                    <select id="viagem-veiculo" name="viagem-veiculo" required>
+                        <option value="">-- Selecione um Veículo --</option>
+                        {/* Opções preenchidas dinamicamente */}
+                    </select>
+                </div>
+
+                <div class="search-box-viagem"> 
+                    <label for="cityInputViagem">Cidade de Destino:</label>
+                    <div class="input-group-viagem">
+                        <input type="text" id="cityInputViagem" placeholder="Digite o nome da cidade">
+                        <button id="searchButtonViagem" class="btn-principal">Buscar Clima</button>
+                    </div>
+                </div>
+
+                {/* Div para exibir o resultado combinado: informações do veículo e previsão */}
+                <div id="resultadoViagemCompleto" class="info-box" style="margin-top: 20px; display: none;">
+                    {/* Conteúdo será preenchido pelo JS */}
+                </div>
+
+                {/* Div separada para erros específicos da previsão do tempo, se necessário, 
+                    ou pode ser integrado em #resultadoViagemCompleto */}
+                <div id="errorMessageViagem" class="error-message-viagem" style="text-align: center;">
+                    {/* Mensagens de erro da API de tempo */}
+                </div>
+            </div>
+        </section>
     </main>
 
     <div id="modal-agendamento" class="modal">
@@ -152,7 +185,7 @@
     </div>
 
     <footer>
-        <p>© 2024 Garagem Inteligente Pro</p>
+        <p>© 2024 Garagem Inteligente Pro Connect</p>
     </footer>
 
     <script src="JS/Manutencao.js"></script>
