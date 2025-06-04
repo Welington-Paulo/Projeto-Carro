@@ -1,0 +1,46 @@
+{
+    "ABC-1234": {
+        "modeloCompleto": "Volkswagen Nivus Highline 1.0 TSI",
+        "tipoCombustivel": "Flex (Álcool/Gasolina)",
+        "consumoCidade": "8.5 km/l (A) / 12.1 km/l (G)",
+        "consumoEstrada": "10.5 km/l (A) / 14.9 km/l (G)",
+        "tanqueCombustivelL": 52,
+        "valorFIPE": "R$ 125.890,00 (ref. Mês/Ano)",
+        "recalls": ["Nenhum recall ativo para este modelo/ano."],
+        "dicaManutencao": "Verificar nível do óleo a cada 5.000km.",
+        "recursosAdicionais": ["ACC (Controle de Cruzeiro Adaptativo)", "Painel Digital", "Carregador por Indução"]
+    },
+    "DEF-5678": {
+        "modeloCompleto": "Porsche 911 GT3 RS (992)",
+        "tipoCombustivel": "Gasolina Podium",
+        "consumoCidade": "5.2 km/l",
+        "consumoEstrada": "7.8 km/l",
+        "tanqueCombustivelL": 64,
+        "valorFIPE": "R$ 1.760.000,00 (aprox. novo)",
+        "recalls": ["Verificar sistema de fixação do aerofólio traseiro (Lote XZY)."],
+        "dicaManutencao": "Aquecimento adequado do motor antes de uso intenso.",
+        "recursosAdicionais": ["Aerodinâmica Ativa", "Gaiola de Proteção (Opcional)", "Pneus de Ultra Performance", "Eixo traseiro direcional"]
+    },
+    "GHI-9012": {
+        "modeloCompleto": "Volvo FH 540 Globetrotter 6x4T",
+        "tipoCombustivel": "Diesel S10",
+        "consumoMedio": "2.8 km/l (carregado)",
+        "consumoEstrada": "3.5 km/l (vazio)",
+        "tanqueCombustivelL": 1100,
+        "valorFIPE": "R$ 850.000,00 (seminovo, ref. Mês/Ano)",
+        "recalls": [],
+        "dicaManutencao": "Respeitar os intervalos de lubrificação dos componentes da quinta roda.",
+        "recursosAdicionais": ["Câmbio I-Shift", "Suspensão a Ar Eletrônica", "Cabine Leito Luxo", "Freios ABS/EBS com controle de estabilidade"]
+    },
+    "XYZ-7890": {
+        "modeloCompleto": "Fiat Pulse Audace Turbo 200 AT",
+        "tipoCombustivel": "Flex (Álcool/Gasolina)",
+        "consumoCidade": "8.4 km/l (A) / 12.0 km/l (G)",
+        "consumoEstrada": "10.2 km/l (A) / 14.6 km/l (G)",
+        "tanqueCombustivelL": 47,
+        "valorFIPE": "R$ 115.990,00 (ref. Mês/Ano)",
+        "recalls": ["Software da central multimídia (Verificar chassi)."],
+        "dicaManutencao": "Calibrar pneus semanalmente, especialmente antes de viagens.",
+        "recursosAdicionais": ["Central Multimídia 10.1\"", "Frenagem Autônoma de Emergência", "TC+ (Traction Control Plus)", "Wireless Charger"]
+    }
+}

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Essencial para responsividade -->
+    <title>Garagem Inteligente Unificada</title>
+    <!-- Feather Icons - Carregar antes do CSS para evitar FOUC de ícones -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <!-- Ícone do Menu Hambúrguer (apenas para mobile) -->
+        <button id="menu-hamburger-btn" class="menu-hamburger" aria-label="Abrir menu" aria-expanded="false">
+            <i data-feather="menu"></i>
+        </button>
+        <h1>Garagem Inteligente Unificada</h1>
+        <!-- Espaço reservado ou logo à direita se houver -->
+        <div class="header-placeholder"></div>
+    </header>
+
+    <!-- Navegação Principal (será o menu overlay em mobile) -->
+    <nav id="main-nav" class="main-navigation" data-visible="false">
+        <button id="menu-close-btn" class="menu-close" aria-label="Fechar menu">
+            <i data-feather="x"></i>
+        </button>
+        <button class="nav-button active" data-target="tab-adicionar">
+            <i data-feather="plus-circle"></i> Adicionar Veículo
+        </button>
+        <button class="nav-button" data-target="tab-garagem">
+            <i data-feather="grid"></i> Minha Garagem
+        </button>
+        <button class="nav-button" data-target="tab-interagir">
+            <i data-feather="sliders"></i> Interagir Veículo
+        </button>
+        <button class="nav-button" data-target="tab-consultas">
+            <i data-feather="activity"></i> Consultas
+        </button>
+        <button class="nav-button" data-target="tab-planejar-viagem">
+            <i data-feather="map-pin"></i> Planejar Viagem
+        </button>
+    </nav>
+
+    <div id="notificacao-area"></div>
+
+    <main>
+        <!-- ABA ADICIONAR VEÍCULO -->
+        <section id="tab-adicionar" class="tab-content active">
+            <h2><i data-feather="plus-square"></i>Adicionar Novo Veículo</h2>
+            <form id="form-add-veiculo">
+                <div>
+                    <label for="tipo-veiculo">Tipo de Veículo:</label>
+                    <select id="tipo-veiculo" name="tipo-veiculo" required>
+                        <option value="">Selecione...</option>
+                        <option value="Carro">Carro</option>
+                        <option value="CarroEsportivo">Carro Esportivo</option>
+                        <option value="Caminhao">Caminhão</option>
+                        <option value="Veiculo">Veículo Genérico</option> <!-- Opção para veículo base -->
+                    </select>
+                </div>
+                <div><label for="marca">Marca:</label><input type="text" id="marca" name="marca" required></div>
+                <div><label for="modelo">Modelo:</label><input type="text" id="modelo" name="modelo" required></div>
+                <div><label for="ano">Ano:</label><input type="number" id="ano" name="ano" required min="1886" max="2099"></div>
+                <div><label for="placa">Placa (Ex: AAA1234 ou ABC1D23):</label><input type="text" id="placa" name="placa" required pattern="[A-Za-z]{3}[0-9][A-Za-z0-9][0-9]{2}|[A-Za-z]{3}[0-9]{4}" title="Formato AAA1234 ou AAA1B23 (sem hífen)"></div>
+                <div><label for="cor">Cor:</label><input type="text" id="cor" name="cor" value="Branco"></div>
+                
+                <div id="campos-carro" class="campos-especificos" style="display: none;">
+                    <label for="numero-portas">Número de Portas:</label>
+                    <input type="number" id="numero-portas" name="numero-portas" min="2" value="4">
+                </div>
+                <div id="campos-carroesportivo" class="campos-especificos" style="display: none;">
+                    <label for="velocidade-maxima-turbo">Velocidade Máx. com Turbo (km/h):</label>
+                    <input type="number" id="velocidade-maxima-turbo" name="velocidade-maxima-turbo" min="100" value="250">
+                </div>
+                <div id="campos-caminhao" class="campos-especificos" style="display: none;">
+                    <label for="capacidade-carga">Capacidade de Carga (kg):</label>
+                    <input type="number" id="capacidade-carga" name="capacidade-carga" min="100" value="1000">
+                </div>
+                <button type="submit"><i data-feather="save"></i> Salvar Veículo</button>
+            </form>
+        </section>
+
+        <!-- ABA MINHA GARAGEM -->
+        <section id="tab-garagem" class="tab-content">
+            <h2><i data-feather="archive"></i>Veículos na Garagem</h2>
+            <div id="garagem-display-cards">
+                <p>Nenhum veículo na garagem.</p>
+            </div>
+        </section>
+
+        <!-- ABA INTERAGIR COM VEÍCULO -->
+        <section id="tab-interagir" class="tab-content">
+            <h2><i data-feather="cpu"></i>Painel de Interação: <span id="nome-veiculo-interacao">Nenhum</span></h2>
+            <div id="informacoesVeiculoSelecionado">
+                <p>Selecione um veículo na aba "Minha Garagem" para interagir.</p>
+            </div>
+            <div id="botoesAcoesComuns" style="display:none; margin-top: 1rem;">
+                <button data-acao="ligar"><i data-feather="power"></i>Ligar</button>
+                <button data-acao="desligar"><i data-feather="power" style="color: var(--error)"></i>Desligar</button>
+                <button data-acao="acelerar"><i data-feather="arrow-up-circle"></i>Acelerar</button>
+                <button data-acao="frear"><i data-feather="arrow-down-circle"></i>Frear</button>
+                <button data-acao="buzinar"><i data-feather="volume-2"></i>Buzinar</button>
+            </div>
+            <div id="botoesAcoesEspecificas" style="display:none; margin-top: 1rem;">
+                <button data-acao="ativarTurbo" class="acao-especifica carroesportivo-action" style="display: none;"><i data-feather="zap"></i>Ativar Turbo</button>
+                <div class="acao-especifica caminhao-action acao-com-input" style="display: none;">
+                    <input type="number" id="input-carga" placeholder="Kg para carregar" min="0">
+                    <button data-acao="carregar"><i data-feather="arrow-up"></i>Carregar</button>
+                </div>
+                <div class="acao-especifica caminhao-action acao-com-input" style="display: none;">
+                    <input type="number" id="input-descarga" placeholder="Kg para descarregar" min="0">
+                    <button data-acao="descarregar"><i data-feather="arrow-down"></i>Descarregar</button>
+                </div>
+            </div>
+            <div class="log-interacoes-container" style="margin-top: 1.5rem;">
+                <h4><i data-feather="list"></i>Log de Interações do Veículo Selecionado:</h4>
+                <ul id="logInteracoesVeiculo">
+                    <li>Nenhuma interação registrada.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ABA CONSULTAS (Agendamentos, Lembretes, Históricos) -->
+        <section id="tab-consultas" class="tab-content">
+            <h2><i data-feather="file-text"></i>Consultas e Relatórios</h2>
+            <div class="consulta-item">
+                <h3><i data-feather="calendar"></i>Agendamentos Futuros</h3>
+                <div id="agendamentos-futuros-view"><p>Nenhum agendamento futuro.</p></div>
+            </div>
+            <div class="consulta-item">
+                <h3><i data-feather="bell"></i>Lembretes de Manutenção (Hoje/Amanhã)</h3>
+                <div id="lembretes-manutencao-view"><p>Nenhum lembrete.</p></div>
+            </div>
+            <div class="consulta-item">
+                <h3><i data-feather="clipboard"></i>Históricos Consolidados de Manutenção</h3>
+                <div id="historicos-consolidados-view"><p>Nenhum histórico registrado.</p></div>
+            </div>
+        </section>
+
+        <!-- ABA PLANEJAR VIAGEM -->
+        <section id="tab-planejar-viagem" class="tab-content">
+            <h2><i data-feather="navigation-2"></i>Planejador de Viagem</h2>
+            <div class="form-viagem">
+                <div>
+                    <label for="viagem-veiculo">Selecione o Veículo:</label>
+                    <select id="viagem-veiculo">
+                        <option value="">-- Selecione --</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="cityInputViagem">Cidade de Destino:</label>
+                    <input type="text" id="cityInputViagem" placeholder="Ex: London, Paris, Rio de Janeiro">
+                </div>
+                <button id="searchButtonViagem" class="button-style">
+                    <i data-feather="search"></i> Verificar Clima
+                </button>
+            </div>
+            <div id="errorMessageViagem" class="notificacao erro" style="display: none; margin-bottom: 1rem;"></div>
+            
+            <div id="controles-previsao" style="display: none;"> <!-- Começa escondido -->
+                <h4><i data-feather="settings"></i>Opções de Visualização:</h4>
+                <div class="filtros-previsao">
+                    <label>Mostrar:</label>
+                    <button class="btn-filtro-dias button-style-outline" data-dias="1">Hoje</button>
+                    <button class="btn-filtro-dias button-style-outline" data-dias="2">Amanhã</button>
+                    <button class="btn-filtro-dias button-style-outline" data-dias="3">3 Dias</button>
+                    <button class="btn-filtro-dias button-style-outline active" data-dias="5">5 Dias</button>
+                </div>
+                <div class="destaques-previsao">
+                    <label>Destaques:</label>
+                    <label class="checkbox-container"><input type="checkbox" id="destaque-chuva"><span class="checkmark"></span> Chuva <i data-feather="cloud-rain" class="feather-inline"></i></label>
+                    <label class="checkbox-container"><input type="checkbox" id="destaque-temp-baixa" data-temp-limite="10"><span class="checkmark"></span> Frio (<10°C) <i data-feather="thermometer" class="feather-inline" style="color: var(--info);"></i></label>
+                    <label class="checkbox-container"><input type="checkbox" id="destaque-temp-alta" data-temp-limite="30"><span class="checkmark"></span> Calor (>30°C) <i data-feather="thermometer" class="feather-inline" style="color: var(--error);"></i></label>
+                </div>
+            </div>
+            <div id="weatherResultViagem" style="margin-top: 1rem;"> <!-- Onde a previsão será exibida -->
+                <p class="placeholder">Digite uma cidade e clique em "Verificar Clima".</p>
+            </div>
+        </section>
+
+        <!-- MODAL DE AGENDAMENTO DE MANUTENÇÃO -->
+        <div id="modal-agendamento" class="modal"> <!-- Removido style="display:none;" daqui, controlado por JS/CSS -->
+            <div class="modal-content">
+                <button class="close-button" onclick="fecharModalAgendamento()" aria-label="Fechar modal de agendamento"><i data-feather="x"></i></button>
+                <h3>Agendar Manutenção para <span id="modal-veiculo-placa">VEÍCULO</span></h3>
+                <form id="form-agendar-manutencao">
+                    <input type="hidden" id="agendamento-placa-veiculo" name="placa-veiculo">
+                    <div><label for="agendamento-data">Data:</label><input type="date" id="agendamento-data" name="data" required></div>
+                    <div><label for="agendamento-hora">Hora (Opcional):</label><input type="time" id="agendamento-hora" name="agendamento-hora"></div>
+                    <div><label for="agendamento-tipo">Tipo de Serviço:</label><input type="text" id="agendamento-tipo" name="tipo" required placeholder="Ex: Troca de óleo, Revisão de freios"></div>
+                    <div><label for="agendamento-custo">Custo Estimado (R$):</label><input type="number" id="agendamento-custo" name="custo" min="0" step="0.01" required value="0"></div>
+                    <div><label for="agendamento-descricao">Descrição Adicional:</label><textarea id="agendamento-descricao" name="descricao" placeholder="Detalhes do serviço..."></textarea></div>
+                    <button type="submit"><i data-feather="save"></i> Salvar Agendamento</button>
+                </form>
+            </div>
+        </div>
+        
+    </main>
+
+    <footer>
+        <p>© <span id="ano-atual"></span> Garagem Inteligente Unificada.</p>
+    </footer>
+
+    <!-- Scripts JS (Carregar classes primeiro, depois o script principal) -->
+    <script src="js/Manutencao.js"></script>
+    <script src="js/Veiculo.js"></script>
+    <script src="js/Carro.js"></script>
+    <script src="js/CarroEsportivo.js"></script>
+    <script src="js/Caminhao.js"></script>
+    <script src="js/Garagem.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+      // Renderiza ícones Feather após o carregamento do DOM e dos scripts
+      if (typeof feather !== 'undefined') {
+        feather.replace();
+      }
+      // Atualiza o ano no footer
+      const anoAtualEl = document.getElementById('ano-atual');
+      if (anoAtualEl) anoAtualEl.textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
